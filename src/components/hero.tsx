@@ -59,14 +59,6 @@ export function Hero({ profile }: HeroProps) {
         >
           {profile.links.phone}
         </a>
-        <a
-          href={profile.links.photography}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-800 transition-colors hover:bg-zinc-100"
-        >
-          Photography
-        </a>
       </div>
     </header>
   );
