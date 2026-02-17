@@ -28,7 +28,7 @@ export const profile: Profile = {
     github: "https://github.com/renzoventura",
     linkedin: "https://www.linkedin.com/in/renzoventura/",
     email: "renzoventura96@gmail.com",
-    phone: "+64 466893313",
+    phone: "+61 466 893 313",
     photography: "https://photo.renzoventura.com",
     cv: "/cv/RENZO_VENTURA_CV.pdf",
   },
