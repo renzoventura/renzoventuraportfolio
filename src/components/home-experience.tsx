@@ -38,6 +38,16 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
   }, []);
 
   useEffect(() => {
+    const previousRestoration = history.scrollRestoration;
+    history.scrollRestoration = "manual";
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    return () => {
+      history.scrollRestoration = previousRestoration;
+    };
+  }, []);
+
+  useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
     const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
 
@@ -137,7 +147,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
           style={{ opacity: heroOpacity, transform: `scale(${heroScale})` }}
           className="w-full transition-[opacity,transform] duration-300 ease-out"
         >
-          <Hero profile={profile} />
+          <Hero profile={profile} onViewProjectsClick={handleScrollToProjects} />
         </div>
 
         <button

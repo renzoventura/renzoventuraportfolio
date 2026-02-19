@@ -5,9 +5,10 @@ import profilePhoto from "@/assets/profile_photo_optimized.jpg";
 
 type HeroProps = {
   profile: Profile;
+  onViewProjectsClick?: () => void;
 };
 
-export function Hero({ profile }: HeroProps) {
+export function Hero({ profile, onViewProjectsClick }: HeroProps) {
   return (
     <header className="mx-auto flex min-h-[calc(100svh-5rem)] w-full max-w-5xl flex-col justify-center space-y-6 px-1 text-center sm:min-h-0 sm:space-y-8 sm:px-0">
       <div className="space-y-3 sm:space-y-4">
@@ -30,12 +31,13 @@ export function Hero({ profile }: HeroProps) {
         {profile.statement}
       </p>
       <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
-        <a
-          href="#recent-projects"
+        <button
+          type="button"
+          onClick={onViewProjectsClick}
           className="inline-flex min-h-11 min-w-[12rem] items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-8 py-2.5 text-sm font-medium text-slate-950 transition-transform duration-200 ease-out hover:-translate-y-0.5"
         >
           View Recent Projects
-        </a>
+        </button>
         <a
           href={profile.links.cv}
           target="_blank"

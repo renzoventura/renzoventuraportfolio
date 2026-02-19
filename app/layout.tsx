@@ -15,25 +15,34 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.renzoventura.com"),
   title: {
-    default: "Renzo Ventura | Software Engineer",
+    default: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
     template: "%s | Renzo Ventura",
   },
   description:
-    "Software engineer portfolio of Renzo Ventura, featuring recent AI tools, SaaS products, and mobile builds.",
+    "Renzo Ventura - Senior Software Engineer @ Tabcorp. Building high-performance mobile systems and AI-powered products.",
   openGraph: {
-    title: "Renzo Ventura | Software Engineer",
+    title: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
     description:
-      "Minimal portfolio showcasing AI, SaaS, and mobile projects built by Renzo Ventura.",
+      "Senior Software Engineer @ Tabcorp. Portfolio featuring high-performance mobile and AI product work.",
     url: "https://www.renzoventura.com",
     siteName: "Renzo Ventura Portfolio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/og/renzo-ventura-preview.jpg",
+        width: 663,
+        height: 800,
+        alt: "Renzo Ventura - Senior Software Engineer @ Tabcorp",
+      },
+    ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Renzo Ventura | Software Engineer",
+    card: "summary",
+    title: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
     description:
-      "Software engineer portfolio featuring recent projects in AI tools, SaaS, and mobile.",
+      "Senior Software Engineer @ Tabcorp. High-performance mobile systems and AI product work.",
+    images: ["/og/renzo-ventura-preview.jpg"],
   },
 };
 
