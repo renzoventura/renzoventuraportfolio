@@ -15,7 +15,7 @@ export function RecentProjects({ projects }: RecentProjectsProps) {
   const recentProjects = sortByDateDesc(projects).filter((project) => project.recent).slice(0, 4);
 
   return (
-    <section id="recent-projects" className="space-y-5">
+    <section className="space-y-5">
       <div className="space-y-1">
         <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">Recent Projects</h2>
         <p className="text-sm text-zinc-600">Latest work, shipped recently.</p>

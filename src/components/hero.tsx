@@ -6,15 +6,17 @@ type HeroProps = {
 
 export function Hero({ profile }: HeroProps) {
   return (
-    <header className="space-y-6 border-b border-zinc-200 pb-6">
-      <div className="space-y-3">
-        <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
+    <header className="mx-auto w-full max-w-5xl space-y-8 text-center">
+      <div className="space-y-4">
+        <h1 className="text-5xl font-semibold tracking-tight text-zinc-900 sm:text-6xl">
           {profile.name}
         </h1>
-        <h2 className="text-lg font-normal text-zinc-700 sm:text-xl">{profile.title}</h2>
+        <h2 className="text-xl font-normal text-zinc-700 sm:text-2xl">{profile.title}</h2>
       </div>
-      <p className="max-w-2xl text-base leading-7 text-zinc-600">{profile.statement}</p>
-      <div className="flex flex-wrap gap-3">
+      <p className="mx-auto max-w-3xl text-base leading-7 text-zinc-600 sm:text-lg">
+        {profile.statement}
+      </p>
+      <div className="flex flex-wrap justify-center gap-3">
         <a
           href="#recent-projects"
           className="rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
@@ -30,7 +32,7 @@ export function Hero({ profile }: HeroProps) {
           View CV
         </a>
       </div>
-      <div className="flex flex-wrap gap-3 pt-1">
+      <div className="flex flex-wrap justify-center gap-3 pt-1">
         <a
           href={profile.links.linkedin}
           target="_blank"
