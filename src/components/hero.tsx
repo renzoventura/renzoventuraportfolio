@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import type { Profile } from "@/src/data/profile";
-import profilePhoto from "@/assets/profile_photo.jpg";
+import profilePhoto from "@/assets/profile_photo_optimized.jpg";
 
 type HeroProps = {
   profile: Profile;
