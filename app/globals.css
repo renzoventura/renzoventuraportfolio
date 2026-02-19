@@ -28,7 +28,6 @@ body {
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
 }
 
 .scroll-indicator-chevron {
@@ -80,10 +79,6 @@ button:focus-visible {
 }
 
 @media (max-width: 767px) {
-  html {
-    scroll-snap-type: none;
-  }
-
   .hero-radial-glow {
     filter: blur(42px);
   }

@@ -127,7 +127,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-3 sm:px-6 md:px-10">
-      <section className="relative flex min-h-[100svh] snap-start items-center justify-center overflow-hidden py-8 sm:min-h-screen sm:py-0">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden py-8 sm:py-0">
         <div
           aria-hidden="true"
           className="hero-radial-glow pointer-events-none absolute inset-0 -z-10"
@@ -154,7 +154,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
       <section
         id="recent-projects"
         ref={projectsSectionRef}
-        className="my-6 flex min-h-[90svh] snap-start items-center rounded-3xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-3 py-14 shadow-[var(--shadow-soft)] sm:my-8 sm:min-h-screen sm:px-6 sm:py-20 md:px-8"
+        className="my-6 flex items-center rounded-3xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-3 py-14 shadow-[var(--shadow-soft)] sm:my-8 sm:px-6 sm:py-20 md:px-8"
       >
         <div
           style={{ opacity: projectsOpacity, transform: `translateY(${projectsTranslateY}px)` }}
