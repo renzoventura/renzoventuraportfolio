@@ -108,7 +108,12 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-10">
-      <section className="relative flex min-h-screen snap-start items-center justify-center">
+      <section className="relative flex min-h-screen snap-start items-center justify-center overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="hero-radial-glow pointer-events-none absolute inset-0 -z-10"
+        />
+        <div aria-hidden="true" className="hero-noise pointer-events-none absolute inset-0 -z-10" />
         <div
           style={{ opacity: heroOpacity, transform: `scale(${heroScale})` }}
           className="w-full transition-[opacity,transform] duration-300 ease-out"
@@ -123,14 +128,14 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
           style={{ opacity: indicatorOpacity }}
           className="group absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full p-2 transition-opacity duration-300"
         >
-          <span className="scroll-indicator-chevron block h-6 w-6 border-b-2 border-r-2 border-zinc-400" />
+          <span className="scroll-indicator-chevron block h-6 w-6 border-b-2 border-r-2 border-[color:var(--muted-foreground)]" />
         </button>
       </section>
 
       <section
         id="recent-projects"
         ref={projectsSectionRef}
-        className="flex min-h-screen snap-start items-center py-20"
+        className="my-8 flex min-h-screen snap-start items-center rounded-3xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-20 shadow-[var(--shadow-soft)] sm:px-6 md:px-8"
       >
         <div
           style={{ opacity: projectsOpacity, transform: `translateY(${projectsTranslateY}px)` }}

@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
-  --foreground: #18181b;
+  --background: #0f141c;
+  --surface-1: #151c26;
+  --surface-2: #1a2330;
+  --surface-elevated: #1e2938;
+  --foreground: #e8eef6;
+  --muted-foreground: #9aa8bc;
+  --border-subtle: rgba(173, 195, 222, 0.18);
+  --shadow-soft: 0 14px 34px rgba(4, 9, 16, 0.28);
+  --accent-start: #2f9cb8;
+  --accent-end: #4a76d8;
 }
 
 @theme inline {
@@ -25,8 +33,30 @@ html {
 
 .scroll-indicator-chevron {
   transform: rotate(45deg);
-  opacity: 0.65;
+  opacity: 0.55;
   animation: scroll-indicator-bounce 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.hero-radial-glow {
+  background: radial-gradient(
+    ellipse 52% 38% at 50% 44%,
+    rgba(61, 148, 178, 0.24),
+    rgba(74, 118, 216, 0.14) 38%,
+    rgba(15, 20, 28, 0) 72%
+  );
+  filter: blur(56px);
+}
+
+.hero-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 0.5px, transparent 0.5px);
+  background-size: 2px 2px;
+  opacity: 0.1;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-start) 55%, white 45%);
+  outline-offset: 2px;
 }
 
 @keyframes scroll-indicator-bounce {

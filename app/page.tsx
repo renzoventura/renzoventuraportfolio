@@ -4,7 +4,7 @@ import { projects } from "@/src/data/projects";
 
 export default function Home() {
   return (
-    <div className="bg-stone-50">
+    <div className="bg-[color:var(--background)]">
       <HomeExperience profile={profile} projects={projects} />
     </div>
   );
