@@ -6,7 +6,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)]">
+    <article className="flex h-full flex-col rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] transition-all duration-200 ease-out hover:border-[color:var(--accent-start)] sm:rounded-3xl sm:hover:-translate-y-0.5">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div className="space-y-1">
           <h3 className="text-lg font-semibold tracking-tight text-[color:var(--foreground)]">
@@ -47,12 +47,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       ) : null}
 
-      <div className="mt-auto flex flex-wrap gap-3 text-sm font-medium">
+      <div className="mt-auto grid grid-cols-2 gap-3 text-sm font-medium sm:flex sm:flex-wrap">
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-3 py-1.5 text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-3 py-1.5 text-[color:var(--foreground)] transition-all duration-200 ease-out hover:border-[color:var(--accent-start)] hover:text-white sm:w-auto sm:hover:-translate-y-0.5"
         >
           GitHub
         </a>
@@ -60,7 +60,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-3 py-1.5 text-sm font-semibold text-slate-950 transition-transform duration-200 ease-out hover:-translate-y-0.5"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-3 py-1.5 text-sm font-semibold text-slate-950 transition-transform duration-200 ease-out sm:w-auto sm:hover:-translate-y-0.5"
         >
           {project.demoVideoUrl === project.liveUrl ? "Open Video" : "Live Demo"}
         </a>

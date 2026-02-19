@@ -9,8 +9,8 @@ type HeroProps = {
 
 export function Hero({ profile }: HeroProps) {
   return (
-    <header className="mx-auto w-full max-w-5xl space-y-8 text-center">
-      <div className="space-y-4">
+    <header className="mx-auto w-full max-w-5xl space-y-6 px-1 text-center sm:space-y-8 sm:px-0">
+      <div className="space-y-3 sm:space-y-4">
         <div className="mx-auto h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-[0_10px_28px_rgba(4,9,16,0.34)] sm:h-40 sm:w-40">
           <Image
             src={profilePhoto}
@@ -26,13 +26,13 @@ export function Hero({ profile }: HeroProps) {
           {profile.title}
         </h2>
       </div>
-      <p className="mx-auto max-w-3xl text-base leading-7 text-[color:var(--muted-foreground)] sm:text-lg">
+      <p className="mx-auto max-w-[32ch] text-base leading-7 text-[color:var(--muted-foreground)] sm:max-w-3xl sm:text-lg">
         {profile.statement}
       </p>
-      <div className="flex flex-wrap justify-center gap-3">
+      <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row">
         <a
           href="#recent-projects"
-          className="rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-5 py-2.5 text-sm font-medium text-slate-950 transition-transform duration-200 ease-out hover:-translate-y-0.5"
+          className="inline-flex min-h-11 min-w-[12rem] items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-8 py-2.5 text-sm font-medium text-slate-950 transition-transform duration-200 ease-out hover:-translate-y-0.5"
         >
           View Recent Projects
         </a>
@@ -40,7 +40,7 @@ export function Hero({ profile }: HeroProps) {
           href={profile.links.cv}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
+          className="inline-flex min-h-11 min-w-[12rem] items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-8 py-2.5 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
         >
           View CV
         </a>
@@ -50,7 +50,7 @@ export function Hero({ profile }: HeroProps) {
           href={profile.links.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
         >
           LinkedIn
         </a>
@@ -58,19 +58,19 @@ export function Hero({ profile }: HeroProps) {
           href={profile.links.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
         >
           GitHub
         </a>
         <a
           href={`mailto:${profile.links.email}`}
-          className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
         >
           {profile.links.email}
         </a>
         <a
           href={`tel:${profile.links.phone.replace(/\s+/g, "")}`}
-          className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--accent-start)] hover:text-white"
         >
           {profile.links.phone}
         </a>

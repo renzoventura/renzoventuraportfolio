@@ -78,3 +78,17 @@ button:focus-visible {
     animation: none;
   }
 }
+
+@media (max-width: 767px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .hero-radial-glow {
+    filter: blur(42px);
+  }
+
+  .hero-noise {
+    opacity: 0.06;
+  }
+}

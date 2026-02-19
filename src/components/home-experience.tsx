@@ -23,6 +23,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
   const [heroProgress, setHeroProgress] = useState(0);
   const [projectsInView, setProjectsInView] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -33,6 +34,18 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
 
     return () => {
       mediaQuery.removeEventListener("change", updatePreference);
+    };
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateViewport);
     };
   }, []);
 
@@ -85,12 +98,18 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
     };
   }, []);
 
-  const heroOpacity = prefersReducedMotion ? 1 : 1 - heroProgress * 0.35;
-  const heroScale = prefersReducedMotion ? 1 : 1 - heroProgress * 0.015;
+  const heroFadeFactor = isMobileViewport ? 0.2 : 0.35;
+  const heroScaleFactor = isMobileViewport ? 0.008 : 0.015;
+  const projectLiftOffset = isMobileViewport ? 16 : 28;
+
+  const heroOpacity = prefersReducedMotion ? 1 : 1 - heroProgress * heroFadeFactor;
+  const heroScale = prefersReducedMotion ? 1 : 1 - heroProgress * heroScaleFactor;
   const projectsOpacity = prefersReducedMotion
     ? 1
     : clamp(0.72 + heroProgress * 0.45 + (projectsInView ? 0.05 : 0), 0, 1);
-  const projectsTranslateY = prefersReducedMotion ? 0 : Math.max(0, 28 - heroProgress * 28);
+  const projectsTranslateY = prefersReducedMotion
+    ? 0
+    : Math.max(0, projectLiftOffset - heroProgress * projectLiftOffset);
   const indicatorOpacity = prefersReducedMotion ? 1 : clamp(1 - heroProgress * 4, 0, 1);
 
   const handleScrollToProjects = () => {
@@ -107,8 +126,8 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 sm:px-6 md:px-10">
-      <section className="relative flex min-h-screen snap-start items-center justify-center overflow-hidden">
+    <main className="mx-auto w-full max-w-6xl px-3 sm:px-6 md:px-10">
+      <section className="relative flex min-h-[100svh] snap-start items-center justify-center overflow-hidden py-8 sm:min-h-screen sm:py-0">
         <div
           aria-hidden="true"
           className="hero-radial-glow pointer-events-none absolute inset-0 -z-10"
@@ -126,20 +145,20 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
           onClick={handleScrollToProjects}
           aria-label="Scroll to projects section"
           style={{ opacity: indicatorOpacity }}
-          className="group absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full p-2 transition-opacity duration-300"
+          className="group absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full p-2 transition-opacity duration-200 sm:bottom-8 sm:duration-300"
         >
-          <span className="scroll-indicator-chevron block h-6 w-6 border-b-2 border-r-2 border-[color:var(--muted-foreground)]" />
+          <span className="scroll-indicator-chevron block h-5 w-5 border-b-2 border-r-2 border-[color:var(--muted-foreground)] sm:h-6 sm:w-6" />
         </button>
       </section>
 
       <section
         id="recent-projects"
         ref={projectsSectionRef}
-        className="my-8 flex min-h-screen snap-start items-center rounded-3xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-4 py-20 shadow-[var(--shadow-soft)] sm:px-6 md:px-8"
+        className="my-6 flex min-h-[90svh] snap-start items-center rounded-3xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-3 py-14 shadow-[var(--shadow-soft)] sm:my-8 sm:min-h-screen sm:px-6 sm:py-20 md:px-8"
       >
         <div
           style={{ opacity: projectsOpacity, transform: `translateY(${projectsTranslateY}px)` }}
-          className="w-full transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          className="w-full transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:duration-500"
         >
           <RecentProjects projects={projects} />
         </div>

@@ -15,22 +15,22 @@ export function RecentProjects({ projects }: RecentProjectsProps) {
   const recentProjects = sortByDateDesc(projects).filter((project) => project.recent).slice(0, 4);
 
   return (
-    <section className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold tracking-[-0.02em] text-[color:var(--foreground)]">
+    <section className="space-y-7 sm:space-y-6">
+      <div className="space-y-2 sm:space-y-1">
+        <h2 className="text-[clamp(1.6rem,5vw,2rem)] font-semibold tracking-[-0.02em] text-[color:var(--foreground)]">
           Recent Projects
         </h2>
-        <p className="text-sm text-[color:var(--muted-foreground)]">Latest work, shipped recently.</p>
+        <p className="max-w-[34ch] text-sm leading-6 text-[color:var(--muted-foreground)]">
+          Latest work, shipped recently.
+        </p>
       </div>
 
-      <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:overflow-visible md:px-0">
-        <div className="flex snap-x gap-4 md:grid md:grid-cols-2">
+      <div className="space-y-5 md:grid md:grid-cols-2 md:gap-5 md:space-y-0">
           {recentProjects.map((project) => (
-            <div key={project.id} className="w-[85%] shrink-0 snap-start md:w-auto">
+            <div key={project.id} className="w-full">
               <ProjectCard project={project} />
             </div>
           ))}
-        </div>
       </div>
     </section>
   );
