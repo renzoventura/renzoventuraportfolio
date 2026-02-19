@@ -127,7 +127,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-3 sm:px-6 md:px-10">
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden py-8 sm:py-0">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden pb-8 pt-[calc(env(safe-area-inset-top)+1rem)] sm:py-0">
         <div
           aria-hidden="true"
           className="hero-radial-glow pointer-events-none absolute inset-0 -z-10"

@@ -9,7 +9,7 @@ type HeroProps = {
 
 export function Hero({ profile }: HeroProps) {
   return (
-    <header className="mx-auto w-full max-w-5xl space-y-6 px-1 text-center sm:space-y-8 sm:px-0">
+    <header className="mx-auto flex min-h-[calc(100svh-5rem)] w-full max-w-5xl flex-col justify-center space-y-6 px-1 text-center sm:min-h-0 sm:space-y-8 sm:px-0">
       <div className="space-y-3 sm:space-y-4">
         <div className="mx-auto h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-[0_10px_28px_rgba(4,9,16,0.34)] sm:h-40 sm:w-40">
           <Image
