@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import type { Project } from "@/src/data/projects";
 
 type ProjectCardProps = {
@@ -32,18 +34,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
         ))}
       </ul>
 
-      {project.demoVideoUrl ? (
+      {project.demoImageUrl ? (
         <div className="mb-5 overflow-hidden rounded-xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)]">
-          <video
-            controls
-            preload="metadata"
-            playsInline
+          <Image
+            src={project.demoImageUrl}
+            alt={`${project.title} app screenshot`}
+            width={473}
+            height={1024}
             className="h-auto w-full"
-            aria-label={`${project.title} demo video`}
-          >
-            <source src={project.demoVideoUrl} />
-            Your browser does not support the video tag.
-          </video>
+          />
         </div>
       ) : null}
 
@@ -62,7 +61,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           rel="noopener noreferrer"
           className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-3 py-1.5 text-sm font-semibold text-slate-950 transition-transform duration-200 ease-out sm:w-auto sm:hover:-translate-y-0.5"
         >
-          {project.demoVideoUrl === project.liveUrl ? "Open Video" : "Live Demo"}
+          Watch Demo
         </a>
       </div>
     </article>
