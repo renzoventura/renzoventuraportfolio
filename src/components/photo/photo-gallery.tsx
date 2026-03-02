@@ -24,7 +24,7 @@ function fisherYates<T>(arr: T[]): T[] {
   return a;
 }
 
-function shufflePhotos(input: Photo[]): Photo[] {
+function shufflePhotos(input: Photo[], prevPhoto?: Photo): Photo[] {
   const portraits = input.filter((p) => p.height >= p.width);
   const landscapes = input.filter((p) => p.height < p.width);
   const shuffledP = fisherYates(portraits);
@@ -33,8 +33,9 @@ function shufflePhotos(input: Photo[]): Photo[] {
   const result: Photo[] = [];
   let pi = 0;
   let li = 0;
-  let streak = 0;
-  let lastWasPortrait = false;
+  // Seed streak from the last photo before this sequence (e.g. last featured photo)
+  let lastWasPortrait = prevPhoto ? prevPhoto.height >= prevPhoto.width : false;
+  let streak = prevPhoto ? 1 : 0;
 
   while (pi < shuffledP.length || li < shuffledL.length) {
     const hasPortrait = pi < shuffledP.length;
@@ -45,9 +46,9 @@ function shufflePhotos(input: Photo[]): Photo[] {
       takePortrait = false;
     } else if (!hasLandscape) {
       takePortrait = true;
-    } else if (streak >= 2 && lastWasPortrait) {
+    } else if (streak >= 1 && lastWasPortrait) {
       takePortrait = false;
-    } else if (streak >= 2 && !lastWasPortrait) {
+    } else if (streak >= 1 && !lastWasPortrait) {
       takePortrait = true;
     } else {
       const remainingP = shuffledP.length - pi;
@@ -71,27 +72,9 @@ function shufflePhotos(input: Photo[]): Photo[] {
   return result;
 }
 
-function distributeFeatures(regular: Photo[], featured: Photo[]): Photo[] {
-  if (featured.length === 0) return regular;
-
-  const count = featured.length;
-  const rCount = regular.length;
-  const positions: number[] = [];
-
-  for (let i = 0; i < count; i++) {
-    let pos = Math.round(((i + 1) / (count + 1)) * rCount);
-    if (i > 0 && pos - positions[i - 1] < 2) {
-      pos = positions[i - 1] + 2;
-    }
-    positions.push(pos);
-  }
-
-  const result = [...regular];
-  for (let i = count - 1; i >= 0; i--) {
-    result.splice(positions[i], 0, featured[i]);
-  }
-
-  return result;
+// Featured photos always appear first (positions 1, 2, ...)
+function orderPhotos(regular: Photo[], featured: Photo[]): Photo[] {
+  return [...featured, ...regular];
 }
 
 function getColCount(width: number): number {
@@ -104,7 +87,6 @@ export function PhotoGallery() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [orderedPhotos, setOrderedPhotos] = useState<Photo[]>(allPhotos);
   const [spanMap, setSpanMap] = useState<Record<string, number>>({});
-  const [colMap, setColMap] = useState<Record<string, number>>({});
   const [cols, setCols] = useState(3);
   const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -113,8 +95,9 @@ export function PhotoGallery() {
   useEffect(() => {
     const featured = allPhotos.filter((p) => p.featured);
     const regular = allPhotos.filter((p) => !p.featured);
-    const shuffledRegular = shufflePhotos(regular);
-    const withFeatured = distributeFeatures(shuffledRegular, featured);
+    const lastFeatured = featured.length > 0 ? featured[featured.length - 1] : undefined;
+    const shuffledRegular = shufflePhotos(regular, lastFeatured);
+    const withFeatured = orderPhotos(shuffledRegular, featured);
     setOrderedPhotos(withFeatured);
     setReady(true);
   }, []);
@@ -125,22 +108,17 @@ export function PhotoGallery() {
 
     const containerWidth = el.getBoundingClientRect().width;
     const colCount = getColCount(containerWidth);
+    const colW = (containerWidth - GAP * (colCount - 1)) / colCount;
     const newSpanMap: Record<string, number> = {};
-    const newColMap: Record<string, number> = {};
 
     for (const photo of orderedPhotos) {
-      const colSpan = photo.featured && colCount > 1 ? 2 : 1;
-      const colW = (containerWidth - GAP * (colCount - 1)) / colCount;
-      const itemW = colW * colSpan + GAP * (colSpan - 1);
-      const imageH = itemW * (photo.height / photo.width);
+      const imageH = colW * (photo.height / photo.width);
       const rowSpan = Math.ceil((imageH + TEXT_OFFSET + GAP) / (ROW_UNIT + GAP));
       newSpanMap[photo.id] = rowSpan;
-      newColMap[photo.id] = colSpan;
     }
 
     setCols(colCount);
     setSpanMap(newSpanMap);
-    setColMap(newColMap);
   }, [orderedPhotos]);
 
   // Compute spans before first paint
@@ -175,7 +153,6 @@ export function PhotoGallery() {
             key={photo.id}
             photo={photo}
             rowSpan={spanMap[photo.id] ?? DEFAULT_SPAN}
-            colSpan={colMap[photo.id] ?? 1}
             onSelect={setSelectedPhoto}
           />
         ))}
