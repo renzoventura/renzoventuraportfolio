@@ -43,6 +43,7 @@ export function PhotoCard({ photo, rowSpan, onSelect }: Props) {
             loaded ? "opacity-100" : "opacity-0"
           }`}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          title=""
           onLoad={() => setLoaded(true)}
         />
       </div>
