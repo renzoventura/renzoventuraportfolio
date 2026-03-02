@@ -99,7 +99,7 @@ export const photos: Photo[] = [
   {
     id: "9",
     title: "Parallel Paths",
-    location: "Amanohashitade",
+    location: "Amanohashidate",
     year: 2023,
     src: "/photos/amanohashitade.JPG",
     alt: "amanohashitade",

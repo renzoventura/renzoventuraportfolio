@@ -13,6 +13,7 @@ type Props = {
 export function PhotoLightbox({ photo, onClose }: Props) {
   const [displayed, setDisplayed] = useState<Photo | null>(null);
   const [visible, setVisible] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export function PhotoLightbox({ photo, onClose }: Props) {
 
     if (photo) {
       setDisplayed(photo);
-      // Double rAF ensures element is painted before transition starts
+      setLoaded(false);
       requestAnimationFrame(() =>
         requestAnimationFrame(() => setVisible(true)),
       );
@@ -44,7 +45,6 @@ export function PhotoLightbox({ photo, onClose }: Props) {
   useEffect(() => {
     if (!displayed) return;
     document.addEventListener("keydown", handleKeyDown);
-    // Preserve scroll position on open (iOS Safari + desktop)
     const scrollY = window.scrollY;
     document.body.style.overflow = "hidden";
     document.body.style.position = "fixed";
@@ -90,13 +90,7 @@ export function PhotoLightbox({ photo, onClose }: Props) {
           className="absolute -top-10 right-0 flex h-8 w-8 items-center justify-center text-white/50 transition-colors duration-150 hover:text-white"
           aria-label="Close lightbox"
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
-          >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path
               d="M1 1L13 13M13 1L1 13"
               stroke="currentColor"
@@ -106,16 +100,27 @@ export function PhotoLightbox({ photo, onClose }: Props) {
           </svg>
         </button>
 
-        {/* Image */}
-        <Image
-          src={displayed.src}
-          alt={displayed.alt}
-          width={displayed.width}
-          height={displayed.height}
-          className="max-h-[82vh] max-w-[88vw] rounded shadow-2xl w-auto h-auto"
-          priority
-          sizes="(max-width: 768px) 88vw, 80vw"
-        />
+        {/* Image + spinner */}
+        <div className="relative">
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-5 w-5 animate-spin rounded-full border border-white/15 border-t-white/50" />
+            </div>
+          )}
+          <Image
+            src={displayed.src}
+            alt={displayed.alt}
+            width={displayed.width}
+            height={displayed.height}
+            className={`h-auto w-auto max-h-[82vh] max-w-[88vw] shadow-2xl transition-opacity duration-500 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+            priority
+            quality={85}
+            sizes="(max-width: 640px) 88vw, 2048px"
+            onLoad={() => setLoaded(true)}
+          />
+        </div>
 
         {/* Caption */}
         <p className="mt-4 text-center text-xs uppercase tracking-widest text-white/45">

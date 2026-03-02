@@ -2,11 +2,7 @@
 
 import { usePhotoTheme } from "./photo-theme-provider";
 
-type Props = {
-  portfolioUrl: string;
-};
-
-export function PhotoNav({ portfolioUrl }: Props) {
+export function PhotoNav() {
   const { theme, toggle } = usePhotoTheme();
   const dark = theme === "dark";
 
@@ -22,7 +18,7 @@ export function PhotoNav({ portfolioUrl }: Props) {
             dark ? "text-stone-300" : "text-stone-800"
           }`}
         >
-          Renzo Ventura
+          past.by
         </span>
         <span
           className={`ml-2 text-sm transition-colors duration-300 ${
@@ -46,16 +42,6 @@ export function PhotoNav({ portfolioUrl }: Props) {
           {dark ? <SunIcon /> : <MoonIcon />}
         </button>
 
-        <a
-          href={portfolioUrl}
-          className={`text-sm transition-colors duration-200 ${
-            dark
-              ? "text-stone-600 hover:text-stone-300"
-              : "text-stone-400 hover:text-stone-800"
-          }`}
-        >
-          ← Portfolio
-        </a>
       </div>
     </nav>
   );

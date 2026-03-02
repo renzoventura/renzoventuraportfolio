@@ -14,22 +14,22 @@ function PageContent() {
         dark ? "bg-[#1c1917]" : "bg-[#f7f4f0]"
       }`}
     >
-      <PhotoNav portfolioUrl="https://www.renzoventura.com" />
+      <PhotoNav />
 
       <header className="px-6 pb-12 pt-32 sm:px-10 lg:px-16">
-        <p
-          className={`mb-3 text-xs uppercase tracking-[0.3em] transition-colors duration-300 ${
-            dark ? "text-stone-500" : "text-stone-400"
-          }`}
-        >
-          Photography
-        </p>
         <h1
           className={`text-4xl font-light tracking-tight transition-colors duration-300 sm:text-5xl ${
             dark ? "text-stone-200" : "text-stone-900"
           }`}
         >
-          Renzo Ventura
+          Renzo Ventura{" "}
+          <span
+            className={`transition-colors duration-300 ${
+              dark ? "text-stone-500" : "text-stone-400"
+            }`}
+          >
+            | japan, 2023
+          </span>
         </h1>
       </header>
 
