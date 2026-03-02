@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 import type { Photo } from "@/src/data/photos";
 
@@ -15,6 +16,7 @@ type Props = {
 export function PhotoCard({ photo, rowSpan, onSelect }: Props) {
   const { theme } = usePhotoTheme();
   const dark = theme === "dark";
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <article
@@ -26,14 +28,22 @@ export function PhotoCard({ photo, rowSpan, onSelect }: Props) {
       tabIndex={0}
       aria-label={`View ${photo.title}`}
     >
-      <div>
+      <div
+        className={`relative w-full transition-colors duration-500 ${
+          !loaded ? (dark ? "animate-pulse bg-stone-800" : "animate-pulse bg-stone-200") : ""
+        }`}
+        style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
+      >
         <Image
           src={photo.src}
           alt={photo.alt}
           width={photo.width}
           height={photo.height}
-          className="h-auto w-full transition-opacity duration-300 ease-out group-hover:opacity-85"
+          className={`h-auto w-full transition-opacity duration-700 ease-in-out group-hover:opacity-85 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          onLoad={() => setLoaded(true)}
         />
       </div>
       <div className="mt-2 px-0.5">
