@@ -36,7 +36,7 @@ function PageContent() {
               dark ? "text-stone-200" : "text-stone-900"
             }`}
           >
-            Renzo Ventura
+            About
           </h1>
           <div
             className={`space-y-4 text-base font-light leading-relaxed ${
@@ -44,7 +44,7 @@ function PageContent() {
             }`}
           >
             <p>
-              Renzo Ventura is a Melbourne photographer drawn to landscape, travel, and the rhythms of everyday life. This site exists in place of social media, a quieter home for his work.
+              Renzo Ventura is a photographer based in Melbourne, Australia. His work is drawn to landscape, travel, and the rhythms of everyday life. This site exists in place of social media, a quieter home for his work.
             </p>
             <p>
               <a
