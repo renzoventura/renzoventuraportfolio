@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: "https://photo.renzoventura.com",
+      url: "https://www.renzoventura.com/about",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,

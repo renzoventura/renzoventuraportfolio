@@ -15,17 +15,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.renzoventura.com"),
   title: {
-    default: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
+    default: "Renzo Ventura | Senior Software Engineer",
     template: "%s | Renzo Ventura",
   },
   description:
-    "Renzo Ventura - Senior Software Engineer @ Tabcorp. Building high-performance mobile systems and AI-powered products.",
+    "Renzo Ventura is a Senior Software Engineer at Tabcorp, specialising in building reliable, user-first digital products at scale.",
   openGraph: {
-    title: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
+    title: "Renzo Ventura | Senior Software Engineer",
     description:
-      "Senior Software Engineer @ Tabcorp. Portfolio featuring high-performance mobile and AI product work.",
+      "Senior Software Engineer at Tabcorp, leading the technical delivery and architecture of Australia's premier real-time mobile wagering platform.",
     url: "https://www.renzoventura.com",
-    siteName: "Renzo Ventura Portfolio",
+    siteName: "Renzo Ventura",
     locale: "en_US",
     type: "website",
     images: [
@@ -33,15 +33,15 @@ export const metadata: Metadata = {
         url: "/og/og-main.jpg",
         width: 2408,
         height: 1094,
-        alt: "Renzo Ventura - Senior Software Engineer @ Tabcorp",
+        alt: "Renzo Ventura - Senior Software Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
+    title: "Renzo Ventura | Senior Software Engineer",
     description:
-      "Senior Software Engineer @ Tabcorp. High-performance mobile systems and AI product work.",
+      "Senior Software Engineer at Tabcorp, building reliable, user-first digital products at scale.",
     images: ["/og/og-main.jpg"],
   },
 };
