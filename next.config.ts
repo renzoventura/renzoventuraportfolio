@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
     deviceSizes: [480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     qualities: [65, 75, 85],
   },
+  async redirects() {
+    return [
+      {
+        source: "/photo/:path*",
+        missing: [{ type: "host", value: "photo.renzoventura.com" }],
+        destination: "https://photo.renzoventura.com/photo/:path*",
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
