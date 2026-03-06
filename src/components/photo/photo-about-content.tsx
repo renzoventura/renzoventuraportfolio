@@ -48,7 +48,7 @@ function PageContent() {
             />
           </div>
 
-          <div className={`lg:max-w-sm space-y-4 text-base font-light leading-relaxed ${
+          <div className={`lg:max-w-sm space-y-6 text-lg font-light leading-loose ${
             dark ? "text-stone-400" : "text-stone-600"
           }`}>
             <p>
