@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/photo/:path*",
-        missing: [{ type: "host", value: "photo.renzoventura.com" }],
+        has: [{ type: "host", value: "www.renzoventura.com" }],
         destination: "https://photo.renzoventura.com/photo/:path*",
         permanent: false,
       },
