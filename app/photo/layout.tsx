@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://photo.renzoventura.com"),
   title: {
-    default: "Renzo Ventura | work",
+    absolute: "Renzo Ventura | work",
     template: "%s | Renzo Ventura",
   },
   description: "Photography by Renzo Ventura.",
