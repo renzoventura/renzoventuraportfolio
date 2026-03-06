@@ -19,7 +19,7 @@ function PageContent() {
     >
       <PhotoNav />
 
-      <header className="px-6 pb-8 pt-20 sm:pt-32 sm:px-10 lg:px-16">
+      <header className="px-6 pb-4 pt-20 sm:pt-32 sm:pb-8 sm:px-10 lg:px-16">
         <h1
           className={`text-2xl font-light tracking-tight transition-colors duration-300 sm:text-5xl ${
             dark ? "text-stone-200" : "text-stone-900"
@@ -37,7 +37,7 @@ function PageContent() {
       </header>
 
       <main className="flex-1 px-6 pb-24 sm:px-10 lg:px-16">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
+        <div className="flex flex-col gap-4 sm:gap-8 lg:flex-row lg:items-start lg:gap-12">
           <div className={`relative w-full shrink-0 lg:w-1/3 transition-colors duration-500 ${
             !loaded ? (dark ? "animate-pulse bg-stone-800" : "animate-pulse bg-stone-200") : ""
           }`} style={{ aspectRatio: "1741 / 2150" }}>
