@@ -48,6 +48,7 @@ function PageContent() {
               height={2150}
               className={`w-full transition-opacity duration-700 ease-in-out ${loaded ? "opacity-100" : "opacity-0"}`}
               sizes="(max-width: 1024px) 100vw, 33vw"
+              quality={65}
               priority
               onLoad={() => setLoaded(true)}
             />
