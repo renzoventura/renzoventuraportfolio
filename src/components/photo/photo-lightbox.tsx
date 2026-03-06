@@ -46,9 +46,9 @@ export function PhotoLightbox({ photo, onClose }: Props) {
     if (!displayed) return;
     document.addEventListener("keydown", handleKeyDown);
     const scrollY = window.scrollY;
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
     document.body.style.top = `-${scrollY}px`;
+    document.body.style.position = "fixed";
+    document.body.style.overflow = "hidden";
     document.body.style.width = "100%";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);

@@ -83,11 +83,22 @@ type Props = {
 
 export function PhotoGallery({ photos: allPhotos }: Props) {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+
+  const handleSelect = useCallback((photo: Photo) => {
+    lightboxOpen.current = true;
+    setSelectedPhoto(photo);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    lightboxOpen.current = false;
+    setSelectedPhoto(null);
+  }, []);
   const [orderedPhotos, setOrderedPhotos] = useState<Photo[]>(allPhotos);
   const [spanMap, setSpanMap] = useState<Record<string, number>>({});
   const [cols, setCols] = useState(3);
   const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lightboxOpen = useRef(false);
 
   useEffect(() => {
     const featured = allPhotos.filter((p) => p.featured);
@@ -101,7 +112,7 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
 
   const computeSpans = useCallback(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el || lightboxOpen.current) return;
 
     const containerWidth = el.getBoundingClientRect().width;
     const colCount = getColCount(containerWidth);
@@ -156,7 +167,7 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
               rowSpan={spanMap[photo.id] ?? DEFAULT_SPAN}
               topPadding={topPadding}
               priority={index < 6}
-              onSelect={setSelectedPhoto}
+              onSelect={handleSelect}
             />
           );
         })}
@@ -164,7 +175,7 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
 
       <PhotoLightbox
         photo={selectedPhoto}
-        onClose={() => setSelectedPhoto(null)}
+        onClose={handleClose}
       />
     </>
   );
