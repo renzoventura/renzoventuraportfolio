@@ -30,7 +30,7 @@ function PageContent() {
               dark ? "text-stone-500" : "text-stone-400"
             }`}
           >
-            | photography
+            | work
           </span>
         </h1>
       </header>

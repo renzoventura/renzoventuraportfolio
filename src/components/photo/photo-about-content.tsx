@@ -37,7 +37,7 @@ function PageContent() {
       </header>
 
       <main className="flex-1 px-6 pb-24 sm:px-10 lg:px-16">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
           <div className={`relative w-full shrink-0 lg:w-1/3 transition-colors duration-500 ${
             !loaded ? (dark ? "animate-pulse bg-stone-800" : "animate-pulse bg-stone-200") : ""
           }`} style={{ aspectRatio: "1741 / 2150" }}>
