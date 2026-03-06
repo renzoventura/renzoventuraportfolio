@@ -15,7 +15,7 @@ export const eu25photos: Photo[] = [
   },
   {
     id: "eu25-5",
-    title: "Sienne",
+    title: "Seine",
     location: "Paris",
     year: 2025,
     src: "/eu25/Sienne.JPG",
