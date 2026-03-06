@@ -24,55 +24,49 @@ function fisherYates<T>(arr: T[]): T[] {
   return a;
 }
 
+type Orientation = "portrait" | "landscape" | "square";
+
+function getOrientation(p: Photo): Orientation {
+  const ratio = p.width / p.height;
+  if (ratio > 0.85 && ratio < 1.15) return "square";
+  return p.height > p.width ? "portrait" : "landscape";
+}
+
 function shufflePhotos(input: Photo[], prevPhoto?: Photo): Photo[] {
-  const portraits = input.filter((p) => p.height >= p.width);
-  const landscapes = input.filter((p) => p.height < p.width);
-  const shuffledP = fisherYates(portraits);
-  const shuffledL = fisherYates(landscapes);
+  const pools: Record<Orientation, Photo[]> = {
+    portrait: fisherYates(input.filter((p) => getOrientation(p) === "portrait")),
+    landscape: fisherYates(input.filter((p) => getOrientation(p) === "landscape")),
+    square: fisherYates(input.filter((p) => getOrientation(p) === "square")),
+  };
+  const idx: Record<Orientation, number> = { portrait: 0, landscape: 0, square: 0 };
+  const remaining = (o: Orientation) => pools[o].length - idx[o];
+  const orientations: Orientation[] = ["portrait", "landscape", "square"];
 
   const result: Photo[] = [];
-  let pi = 0;
-  let li = 0;
-  // Seed streak from the last photo before this sequence (e.g. last featured photo)
-  let lastWasPortrait = prevPhoto ? prevPhoto.height >= prevPhoto.width : false;
-  let streak = prevPhoto ? 1 : 0;
+  let last: Orientation | null = prevPhoto ? getOrientation(prevPhoto) : null;
 
-  while (pi < shuffledP.length || li < shuffledL.length) {
-    const hasPortrait = pi < shuffledP.length;
-    const hasLandscape = li < shuffledL.length;
-    let takePortrait: boolean;
+  while (orientations.some((o) => remaining(o) > 0)) {
+    // Prefer any orientation that differs from last
+    const available = orientations.filter((o) => o !== last && remaining(o) > 0);
+    // Fallback: if all remaining are the same orientation, use it
+    const candidates = available.length > 0 ? available : orientations.filter((o) => remaining(o) > 0);
 
-    if (!hasPortrait) {
-      takePortrait = false;
-    } else if (!hasLandscape) {
-      takePortrait = true;
-    } else if (streak >= 1 && lastWasPortrait) {
-      takePortrait = false;
-    } else if (streak >= 1 && !lastWasPortrait) {
-      takePortrait = true;
-    } else {
-      const remainingP = shuffledP.length - pi;
-      const remainingL = shuffledL.length - li;
-      takePortrait = remainingP >= remainingL
-        ? Math.random() < 0.6
-        : Math.random() < 0.4;
+    // Weight by remaining count so depleted pools are picked less often
+    const total = candidates.reduce((s, o) => s + remaining(o), 0);
+    let rand = Math.random() * total;
+    let chosen = candidates[0];
+    for (const o of candidates) {
+      rand -= remaining(o);
+      if (rand <= 0) { chosen = o; break; }
     }
 
-    if (takePortrait) {
-      result.push(shuffledP[pi++]);
-      streak = lastWasPortrait ? streak + 1 : 1;
-      lastWasPortrait = true;
-    } else {
-      result.push(shuffledL[li++]);
-      streak = !lastWasPortrait ? streak + 1 : 1;
-      lastWasPortrait = false;
-    }
+    result.push(pools[chosen][idx[chosen]++]);
+    last = chosen;
   }
 
   return result;
 }
 
-// Featured photos always appear first (positions 1, 2, ...)
 function orderPhotos(regular: Photo[], featured: Photo[]): Photo[] {
   return [...featured, ...regular];
 }
@@ -95,7 +89,6 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
   const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Shuffle once on mount — avoids SSR hydration mismatch (SSR uses original order)
   useEffect(() => {
     const featured = allPhotos.filter((p) => p.featured);
     const regular = allPhotos.filter((p) => !p.featured);
@@ -128,16 +121,13 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
     setSpanMap(newSpanMap);
   }, [orderedPhotos]);
 
-  // Compute spans before first paint
   useIsomorphicLayoutEffect(() => {
     computeSpans();
   }, [computeSpans]);
 
-  // ResizeObserver for responsive updates
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-
     const observer = new ResizeObserver(computeSpans);
     observer.observe(el);
     return () => observer.disconnect();

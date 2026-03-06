@@ -28,6 +28,15 @@ export const albums: Album[] = [
     height: 2150,
   },
   {
+    id: "daylesford",
+    title: "Daylesford",
+    subtitle: "2025",
+    href: "/photo/daylesford",
+    thumbnail: "/daylesford/THUMBNAIL.JPEG",
+    width: 4000,
+    height: 4943,
+  },
+  {
     id: "eu25",
     title: "Europe",
     subtitle: "2025",
