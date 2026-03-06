@@ -45,19 +45,10 @@ export function PhotoLightbox({ photo, onClose }: Props) {
   useEffect(() => {
     if (!displayed) return;
     document.addEventListener("keydown", handleKeyDown);
-    const scrollY = window.scrollY;
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.position = "fixed";
-    document.body.style.overflow = "hidden";
-    document.body.style.width = "100%";
+    document.documentElement.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      const savedScrollY = Math.abs(parseInt(document.body.style.top || "0"));
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.overflow = "";
-      document.body.style.width = "";
-      window.scrollTo(0, savedScrollY);
+      document.documentElement.style.overflow = "";
     };
   }, [displayed, handleKeyDown]);
 
