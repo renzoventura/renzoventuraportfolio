@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 import type { Project } from "@/src/data/projects";
 
@@ -7,62 +10,54 @@ type ProjectCardProps = {
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] transition-all duration-200 ease-out hover:border-[color:var(--accent-start)] sm:rounded-3xl sm:hover:-translate-y-0.5">
-      <div className="mb-4 flex items-start justify-between gap-4">
-        <div className="space-y-1">
-          <h3 className="text-lg font-semibold tracking-tight text-[color:var(--foreground)]">
-            {project.title}
-          </h3>
-          <p className="text-sm font-medium text-[color:var(--muted-foreground)]">
-            {project.shortDescription}
-          </p>
-        </div>
-        <span className="shrink-0 text-xs text-[color:var(--muted-foreground)]">{project.date}</span>
-      </div>
-
-      <p className="mb-4 text-sm leading-6 text-[color:var(--muted-foreground)]">{project.description}</p>
-
-      <ul className="mb-5 flex flex-wrap gap-2">
-        {project.stack.map((item) => (
-          <li
-            key={`${project.id}-${item}`}
-            className="rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-2.5 py-1 text-xs text-[color:var(--muted-foreground)]"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-
+    <article className="group">
       {project.demoImageUrl ? (
-        <div className="mb-5 overflow-hidden rounded-xl border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)]">
-          <Image
-            src={project.demoImageUrl}
-            alt={`${project.title} app screenshot`}
-            width={473}
-            height={1024}
-            className="h-auto w-full"
-          />
-        </div>
+        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="block">
+          <div
+            className={`relative w-full transition-colors duration-500 ${
+              !loaded ? "animate-pulse bg-stone-800" : ""
+            }`}
+            style={{ aspectRatio: "473 / 1024" }}
+          >
+            <Image
+              src={project.demoImageUrl}
+              alt={`${project.title} screenshot`}
+              width={473}
+              height={1024}
+              className={`h-auto w-full transition-opacity duration-700 ease-in-out group-hover:opacity-85 ${
+                loaded ? "opacity-100" : "opacity-0"
+              }`}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              onLoad={() => setLoaded(true)}
+            />
+          </div>
+        </a>
       ) : null}
 
-      <div className="mt-auto grid grid-cols-2 gap-3 text-sm font-medium sm:flex sm:flex-wrap">
-        <a
-          href={project.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--surface-1)] px-3 py-1.5 text-[color:var(--foreground)] transition-all duration-200 ease-out hover:border-[color:var(--accent-start)] hover:text-white sm:w-auto sm:hover:-translate-y-0.5"
-        >
-          GitHub
-        </a>
-        <a
-          href={project.liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--accent-start)] to-[color:var(--accent-end)] px-3 py-1.5 text-sm font-semibold text-slate-950 transition-transform duration-200 ease-out sm:w-auto sm:hover:-translate-y-0.5"
-        >
-          Watch Demo
-        </a>
+      <div className="mt-2 px-0.5">
+        <p className="text-xs tracking-wide text-stone-400">{project.title}</p>
+        <p className="mt-0.5 text-xs text-stone-600">{project.shortDescription}</p>
+        <div className="mt-2 flex gap-4">
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-stone-600 transition-colors duration-200 hover:text-stone-400"
+          >
+            GitHub
+          </a>
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-stone-600 transition-colors duration-200 hover:text-stone-400"
+          >
+            Demo
+          </a>
+        </div>
       </div>
     </article>
   );

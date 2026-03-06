@@ -36,9 +36,5 @@ export default async function Home() {
     return <AlbumPageContent />;
   }
 
-  return (
-    <div className="bg-[color:var(--background)]">
-      <HomeExperience profile={profile} projects={projects} />
-    </div>
-  );
+  return <HomeExperience profile={profile} projects={projects} />;
 }
