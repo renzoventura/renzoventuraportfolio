@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 import { PhotoNav } from "./photo-nav";
 import { PhotoThemeProvider, usePhotoTheme } from "./photo-theme-provider";
@@ -8,6 +9,7 @@ import { PhotoThemeProvider, usePhotoTheme } from "./photo-theme-provider";
 function PageContent() {
   const { theme } = usePhotoTheme();
   const dark = theme === "dark";
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div
@@ -36,24 +38,25 @@ function PageContent() {
 
       <main className="flex-1 px-6 pb-24 sm:px-10 lg:px-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12">
-          <div className="w-full shrink-0 lg:w-1/3">
+          <div className={`relative w-full shrink-0 lg:w-1/3 transition-colors duration-500 ${
+            !loaded ? (dark ? "animate-pulse bg-stone-800" : "animate-pulse bg-stone-200") : ""
+          }`} style={{ aspectRatio: "1741 / 2150" }}>
             <Image
               src="/about/portrait.JPG"
               alt="Renzo Ventura"
               width={1741}
               height={2150}
-              className="w-full"
+              className={`w-full transition-opacity duration-700 ease-in-out ${loaded ? "opacity-100" : "opacity-0"}`}
               sizes="(max-width: 1024px) 100vw, 33vw"
               priority
+              onLoad={() => setLoaded(true)}
             />
           </div>
 
-          <div className={`space-y-6 text-xl font-normal leading-relaxed ${
+          <div className={`max-w-[63ch] text-xl font-normal leading-relaxed ${
             dark ? "text-stone-400" : "text-stone-600"
           }`}>
-            <p>Renzo Ventura is a photographer based in Melbourne, Australia.</p>
-            <p>His work is drawn to landscape, travel, and the rhythms of everyday life.</p>
-            <p>This site exists in place of social media, a quieter home for his work.</p>
+            <p>Renzo Ventura is a photographer based in Melbourne, Australia. His work is drawn to landscape, travel, and the rhythms of everyday life. This site exists in place of social media, a quieter home for his work.</p>
             <p>
               <a
                 href="mailto:renzoventura96@gmail.com"
