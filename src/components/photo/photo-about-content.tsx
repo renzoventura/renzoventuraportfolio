@@ -24,7 +24,7 @@ function PageContent() {
             alt="Renzo Ventura"
             width={1741}
             height={2150}
-            className="w-full rounded-sm"
+            className="w-full"
             sizes="(max-width: 1024px) 100vw, 420px"
             priority
           />
