@@ -12,6 +12,18 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: "Renzo Ventura | work",
       description: "Photography by Renzo Ventura.",
+      openGraph: {
+        title: "Renzo Ventura | work",
+        description: "Photography by Renzo Ventura.",
+        url: "https://photo.renzoventura.com",
+        images: [{ url: "https://photo.renzoventura.com/japan23/THUMBNAIL.JPEG", width: 4410, height: 5450 }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "Renzo Ventura | work",
+        description: "Photography by Renzo Ventura.",
+        images: ["https://photo.renzoventura.com/japan23/THUMBNAIL.JPEG"],
+      },
     };
   }
   return {};
