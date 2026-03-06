@@ -5,9 +5,11 @@ export function middleware(request: NextRequest): NextResponse {
 
   if (hostname.startsWith("photo.")) {
     const url = request.nextUrl.clone();
-    const path = url.pathname === "/" ? "" : url.pathname;
-    url.pathname = `/photo${path}`;
-    return NextResponse.rewrite(url);
+    // Skip paths already starting with /photo to avoid double-rewriting
+    if (!url.pathname.startsWith("/photo")) {
+      url.pathname = `/photo${url.pathname === "/" ? "" : url.pathname}`;
+      return NextResponse.rewrite(url);
+    }
   }
 
   return NextResponse.next();
