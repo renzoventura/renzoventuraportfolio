@@ -17,7 +17,6 @@ export function AlbumCard({ album, rowSpan }: Props) {
   const { theme } = usePhotoTheme();
   const dark = theme === "dark";
   const [loaded, setLoaded] = useState(false);
-
   return (
     <article
       className="group"

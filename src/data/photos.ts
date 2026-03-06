@@ -9,7 +9,7 @@ export type Photo = {
   title: string;
   location?: string;
   year: number;
-  src: string;
+  src: string; 
   alt: string;
   category: PhotoCategory;
   width: number;

@@ -147,7 +147,7 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
     <>
       <div
         ref={containerRef}
-        className={`transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"}`}
+        className={`transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"} ${selectedPhoto ? "invisible" : ""}`}
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${cols}, 1fr)`,

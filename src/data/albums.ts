@@ -27,4 +27,13 @@ export const albums: Album[] = [
     width: 1740,
     height: 2150,
   },
+  {
+    id: "eu25",
+    title: "Europe",
+    subtitle: "2025",
+    href: "/photo/eu25",
+    thumbnail: "/eu25/THUMBNAIL.JPEG",
+    width: 1740,
+    height: 2150,
+  },
 ];
