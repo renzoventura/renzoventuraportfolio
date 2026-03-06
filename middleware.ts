@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function proxy(request: NextRequest): NextResponse {
+export function middleware(request: NextRequest): NextResponse {
   const hostname = request.headers.get("host") ?? "";
 
   if (hostname.startsWith("photo.")) {
