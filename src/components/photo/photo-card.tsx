@@ -11,10 +11,11 @@ type Props = {
   photo: Photo;
   rowSpan: number;
   topPadding?: number;
+  priority?: boolean;
   onSelect: (photo: Photo) => void;
 };
 
-export function PhotoCard({ photo, rowSpan, topPadding = 0, onSelect }: Props) {
+export function PhotoCard({ photo, rowSpan, topPadding = 0, priority = false, onSelect }: Props) {
   const { theme } = usePhotoTheme();
   const dark = theme === "dark";
   const [loaded, setLoaded] = useState(false);
@@ -44,6 +45,8 @@ export function PhotoCard({ photo, rowSpan, topPadding = 0, onSelect }: Props) {
             loaded ? "opacity-100" : "opacity-0"
           }`}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          quality={65}
+          priority={priority}
           title=""
           onLoad={() => setLoaded(true)}
         />

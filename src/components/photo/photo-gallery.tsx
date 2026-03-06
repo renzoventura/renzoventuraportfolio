@@ -165,6 +165,7 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
               photo={photo}
               rowSpan={spanMap[photo.id] ?? DEFAULT_SPAN}
               topPadding={topPadding}
+              priority={index < 6}
               onSelect={setSelectedPhoto}
             />
           );

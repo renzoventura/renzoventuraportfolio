@@ -27,12 +27,11 @@ export const eu22photos: Photo[] = [
   },
   {
     id: "eu22-4",
-    title: "Statue of Helios",
+    title: "Helios",
     year: 2022,
-
     location: "Berlin",
     src: "/eu22/david.JPG",
-    alt: "david",
+    alt: "Helios",
     category: "travel",
     width: 1469,
     height: 2150,
@@ -128,7 +127,7 @@ export const eu22photos: Photo[] = [
   },
   {
     id: "eu22-11",
-    title: "Ponte dell’Accademia",
+    title: "The Floating City",
     location: "Venice",
     year: 2022,
     src: "/eu22/venice.JPG",
