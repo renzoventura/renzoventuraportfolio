@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname === "/_mw-debug") {
+    return NextResponse.json({
+      host: request.headers.get("host"),
+      xForwardedHost: request.headers.get("x-forwarded-host"),
+      nextUrlHostname: request.nextUrl.hostname,
+      nextUrlHref: request.nextUrl.href,
+    });
+  }
+
   const hostname =
     request.headers.get("x-forwarded-host") ||
     request.headers.get("host") ||
