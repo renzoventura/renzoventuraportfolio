@@ -57,7 +57,7 @@ function PageContent() {
           <div className={`max-w-[63ch] text-sm font-light leading-relaxed sm:text-xl sm:font-normal ${
             dark ? "text-stone-400" : "text-stone-600"
           }`}>
-            <p>Renzo Ventura is a photographer based in Melbourne, Australia. His work is drawn to landscape, travel, and the rhythms of everyday life. This site exists in place of social media, a quieter home for his work.</p>
+            <p>Renzo Ventura is a photographer based in Melbourne, Australia. His work is drawn to landscape, travel, and the rhythms of everyday life. This site exists in-place of social media, a quieter home for his work.</p>
             <p>
               <a
                 href="mailto:renzoventura96@gmail.com"
