@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { AlbumPageContent } from "@/src/components/photo/album-page-content";
 import { HomeExperience } from "@/src/components/home-experience";
 import { profile } from "@/src/data/profile";
 import { projects } from "@/src/data/projects";
@@ -8,7 +8,7 @@ export default async function Home() {
   const headersList = await headers();
   const host = headersList.get("host") ?? "";
   if (host === "photo.renzoventura.com") {
-    redirect("/photo");
+    return <AlbumPageContent />;
   }
 
   return (
