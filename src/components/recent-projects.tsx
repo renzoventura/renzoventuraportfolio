@@ -16,7 +16,7 @@ export function RecentProjects({ projects }: RecentProjectsProps) {
 
   return (
     <section>
-      <h2 className="mb-4 text-xs tracking-wide text-stone-500">Recent work</h2>
+      <h2 className="mb-6 text-2xl font-light tracking-tight text-stone-200 sm:text-3xl">Recent work</h2>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {recentProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
