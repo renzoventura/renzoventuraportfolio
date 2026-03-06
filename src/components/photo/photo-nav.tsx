@@ -1,12 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { usePhotoTheme } from "./photo-theme-provider";
 
 export function PhotoNav() {
   const { theme, toggle } = usePhotoTheme();
   const dark = theme === "dark";
+  const pathname = usePathname();
+  const isAbout = pathname === "/photo/about";
+
+  const linkClass = (active: boolean) =>
+    `text-sm font-medium uppercase tracking-widest transition-colors duration-300 ${
+      active
+        ? dark ? "text-stone-100" : "text-stone-900"
+        : dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-600"
+    }`;
 
   return (
     <nav
@@ -14,37 +24,27 @@ export function PhotoNav() {
         dark ? "bg-[#1c1917]/90" : "bg-[#f7f4f0]/90"
       }`}
     >
-      <div>
-        <Link
-          href="/photo"
-          className={`text-sm font-medium uppercase tracking-widest transition-colors duration-300 ${
-            dark ? "text-stone-300 hover:text-stone-100" : "text-stone-800 hover:text-stone-600"
-          }`}
-        >
-          past.by
-        </Link>
-        <span
-          className={`ml-2 text-sm transition-colors duration-300 ${
-            dark ? "text-stone-600" : "text-stone-400"
-          }`}
-        >
-          / Photography
-        </span>
-      </div>
+      <Link
+        href="/photo"
+        className={`text-sm font-medium uppercase tracking-widest transition-colors duration-300 ${
+          dark ? "text-stone-300 hover:text-stone-100" : "text-stone-800 hover:text-stone-600"
+        }`}
+      >
+        past.by
+      </Link>
 
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-6">
+        <Link href="/photo" className={linkClass(!isAbout)}>Work</Link>
+        <Link href="/photo/about" className={linkClass(isAbout)}>About</Link>
         <button
           onClick={toggle}
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
           className={`transition-colors duration-200 ${
-            dark
-              ? "text-stone-500 hover:text-stone-300"
-              : "text-stone-400 hover:text-stone-700"
+            dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-700"
           }`}
         >
           {dark ? <SunIcon /> : <MoonIcon />}
         </button>
-
       </div>
     </nav>
   );
