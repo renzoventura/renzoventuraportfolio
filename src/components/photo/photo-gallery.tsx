@@ -115,9 +115,12 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
     const colW = (containerWidth - GAP * (colCount - 1)) / colCount;
     const newSpanMap: Record<string, number> = {};
 
-    for (const photo of orderedPhotos) {
+    for (const [i, photo] of orderedPhotos.entries()) {
+      const topPadding = colCount === 3
+        ? (i % 3 === 0 ? 24 : i % 3 === 2 ? 32 : 0)
+        : 0;
       const imageH = colW * (photo.height / photo.width);
-      const rowSpan = Math.ceil((imageH + TEXT_OFFSET + GAP) / (ROW_UNIT + GAP));
+      const rowSpan = Math.ceil((imageH + TEXT_OFFSET + GAP + topPadding) / (ROW_UNIT + GAP));
       newSpanMap[photo.id] = rowSpan;
     }
 
@@ -152,14 +155,20 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
           gap: `${GAP}px`,
         }}
       >
-        {orderedPhotos.map((photo) => (
-          <PhotoCard
-            key={photo.id}
-            photo={photo}
-            rowSpan={spanMap[photo.id] ?? DEFAULT_SPAN}
-            onSelect={setSelectedPhoto}
-          />
-        ))}
+        {orderedPhotos.map((photo, index) => {
+          const topPadding = cols === 3
+            ? (index % 3 === 0 ? 24 : index % 3 === 2 ? 32 : 0)
+            : 0;
+          return (
+            <PhotoCard
+              key={photo.id}
+              photo={photo}
+              rowSpan={spanMap[photo.id] ?? DEFAULT_SPAN}
+              topPadding={topPadding}
+              onSelect={setSelectedPhoto}
+            />
+          );
+        })}
       </div>
 
       <PhotoLightbox

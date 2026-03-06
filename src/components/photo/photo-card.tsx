@@ -10,10 +10,11 @@ import { usePhotoTheme } from "./photo-theme-provider";
 type Props = {
   photo: Photo;
   rowSpan: number;
+  topPadding?: number;
   onSelect: (photo: Photo) => void;
 };
 
-export function PhotoCard({ photo, rowSpan, onSelect }: Props) {
+export function PhotoCard({ photo, rowSpan, topPadding = 0, onSelect }: Props) {
   const { theme } = usePhotoTheme();
   const dark = theme === "dark";
   const [loaded, setLoaded] = useState(false);
@@ -21,7 +22,7 @@ export function PhotoCard({ photo, rowSpan, onSelect }: Props) {
   return (
     <article
       className="group cursor-pointer"
-      style={{ gridRowEnd: `span ${rowSpan}` }}
+      style={{ gridRowEnd: `span ${rowSpan}`, paddingTop: topPadding > 0 ? `${topPadding}px` : undefined }}
       onClick={() => onSelect(photo)}
       onKeyDown={(e) => e.key === "Enter" && onSelect(photo)}
       role="button"

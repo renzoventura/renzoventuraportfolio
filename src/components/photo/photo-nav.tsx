@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { usePhotoTheme } from "./photo-theme-provider";
 
 export function PhotoNav() {
@@ -13,13 +15,14 @@ export function PhotoNav() {
       }`}
     >
       <div>
-        <span
+        <Link
+          href="/photo"
           className={`text-sm font-medium uppercase tracking-widest transition-colors duration-300 ${
-            dark ? "text-stone-300" : "text-stone-800"
+            dark ? "text-stone-300 hover:text-stone-100" : "text-stone-800 hover:text-stone-600"
           }`}
         >
           past.by
-        </span>
+        </Link>
         <span
           className={`ml-2 text-sm transition-colors duration-300 ${
             dark ? "text-stone-600" : "text-stone-400"
