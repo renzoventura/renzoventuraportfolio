@@ -12,7 +12,7 @@ export function PhotoNav() {
   const isAbout = pathname === "/photo/about";
 
   const linkClass = (active: boolean) =>
-    `text-sm font-medium uppercase tracking-widest transition-colors duration-300 ${
+    `text-sm font-medium tracking-wide transition-colors duration-300 ${
       active
         ? dark ? "text-stone-100" : "text-stone-900"
         : dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-600"
