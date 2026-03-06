@@ -19,16 +19,15 @@ function PageContent() {
 
       <main className="flex min-h-screen flex-col px-6 pt-28 pb-24 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16 lg:pt-0">
         <div className="w-full shrink-0 lg:w-[420px]">
-          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
-            <Image
-              src="/about/portrait.jpg"
-              alt="Renzo Ventura"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 420px"
-              priority
-            />
-          </div>
+          <Image
+            src="/about/portrait.JPG"
+            alt="Renzo Ventura"
+            width={1741}
+            height={2150}
+            className="w-full rounded-sm"
+            sizes="(max-width: 1024px) 100vw, 420px"
+            priority
+          />
         </div>
 
         <div className="mt-10 lg:mt-0">
