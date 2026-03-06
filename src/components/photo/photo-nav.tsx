@@ -25,8 +25,8 @@ export function PhotoNav() {
       }`}
     >
       <div className="flex items-center gap-6">
-        <Link href="/photo" className={linkClass(!isAbout)}>Work</Link>
-        <Link href="/photo/about" className={linkClass(isAbout)}>About</Link>
+        <Link href="/photo" className={linkClass(!isAbout)}>work</Link>
+        <Link href="/photo/about" className={linkClass(isAbout)}>about</Link>
       </div>
     </nav>
   );
