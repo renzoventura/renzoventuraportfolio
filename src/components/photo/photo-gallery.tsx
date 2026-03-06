@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { photos as allPhotos, type Photo } from "@/src/data/photos";
+import type { Photo } from "@/src/data/photos";
 
 import { PhotoCard } from "./photo-card";
 import { PhotoLightbox } from "./photo-lightbox";
@@ -83,7 +83,11 @@ function getColCount(width: number): number {
   return 3;
 }
 
-export function PhotoGallery() {
+type Props = {
+  photos: Photo[];
+};
+
+export function PhotoGallery({ photos: allPhotos }: Props) {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [orderedPhotos, setOrderedPhotos] = useState<Photo[]>(allPhotos);
   const [spanMap, setSpanMap] = useState<Record<string, number>>({});

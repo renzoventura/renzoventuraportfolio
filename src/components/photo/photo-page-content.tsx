@@ -1,5 +1,7 @@
 "use client";
 
+import { photos } from "@/src/data/photos";
+
 import { PhotoGallery } from "./photo-gallery";
 import { PhotoNav } from "./photo-nav";
 import { PhotoThemeProvider, usePhotoTheme } from "./photo-theme-provider";
@@ -34,7 +36,7 @@ function PageContent() {
       </header>
 
       <main className="px-6 pb-24 sm:px-10 lg:px-16">
-        <PhotoGallery />
+        <PhotoGallery photos={photos} />
       </main>
 
       <footer className="px-6 pb-12 sm:px-10 lg:px-16">
