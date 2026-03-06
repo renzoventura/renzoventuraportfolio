@@ -17,32 +17,40 @@ function PageContent() {
     >
       <PhotoNav />
 
-      <main className="flex min-h-screen flex-col px-6 pt-28 pb-24 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16 lg:pt-0">
-        <div className="w-full shrink-0 lg:w-[420px]">
-          <Image
-            src="/about/portrait.JPG"
-            alt="Renzo Ventura"
-            width={1741}
-            height={2150}
-            className="w-full"
-            sizes="(max-width: 1024px) 100vw, 420px"
-            priority
-          />
-        </div>
+      <header className="px-6 pb-12 pt-32 sm:px-10 lg:px-16">
+        <h1
+          className={`text-4xl font-light tracking-tight transition-colors duration-300 sm:text-5xl ${
+            dark ? "text-stone-200" : "text-stone-900"
+          }`}
+        >
+          Renzo Ventura{" "}
+          <span
+            className={`transition-colors duration-300 ${
+              dark ? "text-stone-500" : "text-stone-400"
+            }`}
+          >
+            | about
+          </span>
+        </h1>
+      </header>
 
-        <div className="mt-10 lg:mt-0">
-          <h1
-            className={`mb-6 text-3xl font-light tracking-tight sm:text-4xl ${
-              dark ? "text-stone-200" : "text-stone-900"
-            }`}
-          >
-            About
-          </h1>
-          <div
-            className={`space-y-4 text-base font-light leading-relaxed ${
-              dark ? "text-stone-400" : "text-stone-600"
-            }`}
-          >
+      <main className="px-6 pb-24 sm:px-10 lg:px-16">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12">
+          <div className="w-full shrink-0 lg:w-1/3">
+            <Image
+              src="/about/portrait.JPG"
+              alt="Renzo Ventura"
+              width={1741}
+              height={2150}
+              className="w-full"
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              priority
+            />
+          </div>
+
+          <div className={`max-w-sm space-y-4 text-base font-light leading-relaxed ${
+            dark ? "text-stone-400" : "text-stone-600"
+          }`}>
             <p>
               Renzo Ventura is a photographer based in Melbourne, Australia. His work is drawn to landscape, travel, and the rhythms of everyday life. This site exists in place of social media, a quieter home for his work.
             </p>
@@ -59,6 +67,16 @@ function PageContent() {
           </div>
         </div>
       </main>
+
+      <footer className="px-6 pb-12 sm:px-10 lg:px-16">
+        <p
+          className={`text-xs transition-colors duration-300 ${
+            dark ? "text-stone-600" : "text-stone-400"
+          }`}
+        >
+          © {new Date().getFullYear()} Renzo Ventura
+        </p>
+      </footer>
     </div>
   );
 }
