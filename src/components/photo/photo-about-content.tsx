@@ -45,7 +45,17 @@ function PageContent() {
             }`}
           >
             <p>
-              Add your bio here.
+              Renzo Ventura is a Melbourne photographer drawn to landscape, travel, and the rhythms of everyday life. This site exists in place of social media, a quieter home for his work.
+            </p>
+            <p>
+              <a
+                href="mailto:renzoventura96@gmail.com"
+                className={`transition-colors duration-200 ${
+                  dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-700"
+                }`}
+              >
+                renzoventura96@gmail.com
+              </a>
             </p>
           </div>
         </div>
