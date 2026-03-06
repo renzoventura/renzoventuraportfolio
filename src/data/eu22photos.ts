@@ -27,7 +27,7 @@ export const eu22photos: Photo[] = [
   },
   {
     id: "eu22-4",
-    title: "Statue of David",
+    title: "Statue of Helios",
     year: 2022,
 
     location: "Berlin",
