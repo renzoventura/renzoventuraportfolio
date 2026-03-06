@@ -30,19 +30,19 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og/renzo-ventura-preview.jpg",
-        width: 663,
-        height: 800,
+        url: "/og/og-main.jpg",
+        width: 2408,
+        height: 1094,
         alt: "Renzo Ventura - Senior Software Engineer @ Tabcorp",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Renzo Ventura | Senior Software Engineer @ Tabcorp",
     description:
       "Senior Software Engineer @ Tabcorp. High-performance mobile systems and AI product work.",
-    images: ["/og/renzo-ventura-preview.jpg"],
+    images: ["/og/og-main.jpg"],
   },
 };
 
