@@ -11,7 +11,7 @@ function PageContent() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
+      className={`flex min-h-screen flex-col transition-colors duration-300 ${
         dark ? "bg-[#1c1917]" : "bg-[#f7f4f0]"
       }`}
     >
@@ -34,7 +34,7 @@ function PageContent() {
         </h1>
       </header>
 
-      <main className="px-6 pb-24 sm:px-10 lg:px-16">
+      <main className="flex-1 px-6 pb-24 sm:px-10 lg:px-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12">
           <div className="w-full shrink-0 lg:w-1/3">
             <Image
@@ -48,7 +48,7 @@ function PageContent() {
             />
           </div>
 
-          <div className={`max-w-sm space-y-4 text-base font-light leading-relaxed ${
+          <div className={`lg:max-w-sm space-y-4 text-base font-light leading-relaxed ${
             dark ? "text-stone-400" : "text-stone-600"
           }`}>
             <p>
