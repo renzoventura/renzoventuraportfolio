@@ -18,7 +18,7 @@ function PageContent() {
     >
       <PhotoNav />
 
-      <header className="px-6 pb-4 pt-20 sm:pt-32 sm:pb-8 sm:px-10 lg:px-16">
+      <header className="px-6 pb-4 pt-14 sm:pt-32 sm:pb-8 sm:px-10 lg:px-16">
         <h1
           className={`text-2xl font-light tracking-tight transition-colors duration-300 sm:text-5xl ${
             dark ? "text-stone-200" : "text-stone-900"
