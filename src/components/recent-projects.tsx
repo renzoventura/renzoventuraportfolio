@@ -1,4 +1,4 @@
-import { ProjectCard } from "@/src/components/project-card";
+import { ProjectTile } from "@/src/components/project-tile";
 import type { Project } from "@/src/data/projects";
 
 type RecentProjectsProps = {
@@ -7,19 +7,18 @@ type RecentProjectsProps = {
 
 function sortByDateDesc(items: Project[]): Project[] {
   return [...items].sort(
-    (first, second) => new Date(second.date).getTime() - new Date(first.date).getTime(),
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 }
 
 export function RecentProjects({ projects }: RecentProjectsProps) {
-  const recentProjects = sortByDateDesc(projects).filter((project) => project.recent).slice(0, 4);
+  const recentProjects = sortByDateDesc(projects).filter((p) => p.recent).slice(0, 8);
 
   return (
     <section>
-      <h2 className="mb-6 text-2xl font-light tracking-tight text-stone-200 sm:text-3xl">Recent work</h2>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-2">
         {recentProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectTile key={project.id} project={project} />
         ))}
       </div>
     </section>

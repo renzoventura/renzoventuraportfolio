@@ -7,6 +7,7 @@ export type Project = {
   githubUrl: string;
   liveUrl: string;
   demoImageUrl?: string;
+  screenshots?: string[];
   recent: boolean;
   featured: boolean;
   date: string;
@@ -33,6 +34,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/renzoventura/lastk",
     liveUrl: "https://github.com/user-attachments/assets/0beaf45c-fbfe-4d19-985d-9008ee2cae51",
     demoImageUrl: "/projects/lastk_screenshot.jpg",
+    screenshots: ["/projects/lastk_screenshot.jpg"],
     recent: true,
     featured: true,
     date: "2026-02-17",
