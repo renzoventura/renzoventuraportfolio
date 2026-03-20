@@ -28,7 +28,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const chevronClass = `transition-transform duration-200 ${open ? "rotate-180" : ""} ${
     dark ? "text-stone-500" : "text-stone-400"
   }`;
-  const dropdownClass = `absolute right-0 top-full min-w-full rounded-b-lg border border-t-0 py-1 text-xs font-light tracking-widest ${
+  const dropdownClass = `absolute right-0 top-full min-w-full rounded-b-sm border border-t-0 py-1 text-xs font-light tracking-widest ${
     dark ? "border-stone-700 bg-[#2a2522] text-stone-400" : "border-stone-300 bg-[#ece9e4] text-stone-500"
   }`;
 
@@ -47,7 +47,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
       <button
         onClick={() => setOpen((v) => !v)}
         className={`flex items-center gap-1 border px-3 py-1 transition-colors duration-200 ${
-          open ? "rounded-t-lg rounded-b-none" : "rounded-lg"
+          open ? "rounded-t-sm rounded-b-none" : "rounded-sm"
         } ${
           dark ? "border-stone-700 hover:border-stone-500" : "border-stone-300 hover:border-stone-400"
         } ${labelClass}`}
