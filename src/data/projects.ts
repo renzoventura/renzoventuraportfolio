@@ -1,6 +1,7 @@
 export type Project = {
   id: string;
   title: string;
+  category: string;
   shortDescription: string;
   description: string;
   stack: string[];
@@ -17,6 +18,7 @@ export const projects: Project[] = [
   {
     id: "lastk",
     title: "LastK",
+    category: "iOS App",
     shortDescription: "Your performance is art. LastK is the brush.",
     description:
       "iOS app that transforms Strava run data into premium, share-ready graphics: choose a run, add data-driven stickers, overlay on a photo, and export to Instagram or your camera roll.",
