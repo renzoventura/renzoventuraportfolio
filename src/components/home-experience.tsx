@@ -39,18 +39,18 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
             GitHub
           </a>
           <a
-            href={`mailto:${profile.links.email}`}
-            className="text-stone-500 transition-colors duration-200 hover:text-stone-300"
-          >
-            {profile.links.email}
-          </a>
-          <a
             href={profile.links.cv}
             target="_blank"
             rel="noopener noreferrer"
             className="text-stone-500 transition-colors duration-200 hover:text-stone-300"
           >
             CV
+          </a>
+          <a
+            href={`mailto:${profile.links.email}`}
+            className="text-stone-500 transition-colors duration-200 hover:text-stone-300"
+          >
+            {profile.links.email}
           </a>
         </div>
 
