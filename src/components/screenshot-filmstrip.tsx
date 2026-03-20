@@ -6,6 +6,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 type ScreenshotFilmstripProps = {
   screenshots: string[];
   projectTitle: string;
+  embedded?: boolean;
 };
 
 function ScreenshotImage({ src, alt }: { src: string; alt: string }) {
@@ -75,7 +76,7 @@ function NavButton({
   );
 }
 
-export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFilmstripProps) {
+export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = false }: ScreenshotFilmstripProps) {
   const [page, setPage] = useState(0);
   const totalPages = Math.ceil(screenshots.length / PER_PAGE);
   const canPrev = page > 0;
@@ -124,12 +125,12 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
 
   return (
     <div>
-      {/* Mobile: full-bleed free-flowing scroll */}
-      <div className="-mx-6 bg-stone-900 py-8 sm:-mx-10 lg:hidden">
+      {/* Mobile: free-flowing scroll */}
+      <div className={`lg:hidden ${embedded ? "py-2" : "-mx-6 bg-stone-900 py-8 sm:-mx-10"}`}>
         <div className="relative">
           <div
             ref={mobileScrollRef}
-            className="flex gap-3 overflow-x-auto px-6 sm:px-10"
+            className={`flex gap-3 overflow-x-auto ${embedded ? "" : "px-6 sm:px-10"}`}
             style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
             {screenshots.map((src, i) => (
@@ -178,7 +179,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
           direction="left"
         />
 
-        <div ref={containerRef} className="flex-1 overflow-hidden rounded-2xl bg-stone-900 py-6">
+        <div ref={containerRef} className={`flex-1 overflow-hidden rounded-2xl py-4 ${embedded ? "" : "bg-stone-900 py-6"}`}>
           <div
             className="flex"
             style={{
