@@ -17,9 +17,9 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "lastk",
-    title: "LastK",
+    title: "Stride",
     category: "iOS App",
-    shortDescription: "Your performance is art. LastK is the brush.",
+    shortDescription: "Your performance is art. Stride is the brush.",
     description:
       "iOS app that transforms Strava run data into premium, share-ready graphics: choose a run, add data-driven stickers, overlay on a photo, and export to Instagram or your camera roll.",
     stack: [
