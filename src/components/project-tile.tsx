@@ -24,7 +24,10 @@ export function ProjectTile({ project }: ProjectTileProps) {
             </h3>
             <span className="text-xs text-stone-600">{project.category}</span>
           </div>
-          <p className="mt-1 text-xs leading-relaxed text-stone-500 sm:text-sm">{project.description}</p>
+          {project.shortDescription && (
+            <p className="mt-0.5 text-[11px] italic text-stone-600">"{project.shortDescription}"</p>
+          )}
+          <p className="text-xs leading-relaxed text-stone-500 sm:text-sm">{project.description}</p>
         </div>
         <Link
           href={`/projects/${project.id}`}

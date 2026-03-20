@@ -19,7 +19,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         <h1 className="text-2xl font-light tracking-tight text-stone-100 sm:text-4xl">
           {project.title}
         </h1>
-        <p className="mt-2 text-base text-stone-500">{project.shortDescription}</p>
+        <p className="mt-2 text-base italic text-stone-500">"{project.shortDescription}"</p>
 
         <p className="mt-6 text-sm leading-relaxed text-stone-400 sm:text-base">
           {project.description}

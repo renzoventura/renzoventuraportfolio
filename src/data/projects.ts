@@ -23,7 +23,7 @@ export const projects: Project[] = [
     category: "iOS App",
     shortDescription: "Your performance is art. Stride is the brush.",
     description:
-      "Transforms Strava API run data into premium, share-ready graphics: choose a run, add data-driven stickers, overlay on a photo, and export to Instagram or your camera roll.",
+      "Transforms your Strava runs into premium, share-ready graphics. Overlay a live map of your route or a photo, add data-driven stickers, and export straight to Instagram.",
     stack: [
       "SwiftUI",
       "@Observable",
