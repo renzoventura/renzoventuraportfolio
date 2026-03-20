@@ -15,7 +15,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const otherLabel = active === "code" ? "art" : "dev";
   const otherHref = active === "code" ? "/photo" : "/";
 
-  const labelClass = `text-xs font-light tracking-widest uppercase transition-colors duration-300 cursor-pointer select-none ${
+  const labelClass = `text-xs sm:text-sm font-light tracking-widest uppercase transition-colors duration-300 cursor-pointer select-none ${
     dark ? "text-stone-100 hover:text-stone-300" : "text-stone-900 hover:text-stone-600"
   }`;
   const chevronClass = `transition-transform duration-200 ${open ? "rotate-180" : ""} ${

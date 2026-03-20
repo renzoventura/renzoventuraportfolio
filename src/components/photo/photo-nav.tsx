@@ -13,14 +13,14 @@ export function PhotoNav() {
   const isAbout = pathname === "/photo/about";
 
   const linkClass = (active: boolean) =>
-    `text-sm sm:text-base font-light tracking-tight transition-colors duration-300 ${
+    `text-sm sm:text-lg font-light tracking-tight transition-colors duration-300 ${
       active
         ? dark ? "text-stone-100" : "text-stone-900"
         : dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-600"
     }`;
 
   const isRoot = pathname === "/photo";
-  const backLinkClass = `text-sm sm:text-base font-light tracking-tight transition-colors duration-300 ${
+  const backLinkClass = `text-sm sm:text-lg font-light tracking-tight transition-colors duration-300 ${
     dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-600"
   }`;
 
@@ -31,11 +31,12 @@ export function PhotoNav() {
       }`}
     >
       <div>
-        {!isRoot && (
-          <Link href="/photo" className={backLinkClass}>
-            ← back
-          </Link>
-        )}
+        <Link
+          href="/photo"
+          className={`${backLinkClass} ${isRoot ? "invisible pointer-events-none" : "visible"}`}
+        >
+          ← back
+        </Link>
       </div>
       <div className="flex items-center gap-4 sm:gap-8">
         <div className="flex items-center gap-4 sm:gap-6">
