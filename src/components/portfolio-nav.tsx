@@ -8,6 +8,7 @@ import { SiteSwitcher } from "@/src/components/site-switcher";
 export function PortfolioNav() {
   const pathname = usePathname();
   const isAbout = pathname === "/about";
+  const isRoot = pathname === "/";
 
   const linkClass = (active: boolean) =>
     `text-sm sm:text-lg font-light tracking-tight transition-colors duration-300 ${
@@ -19,7 +20,7 @@ export function PortfolioNav() {
       <div>
         <Link
           href="/"
-          className={`text-sm sm:text-lg font-light tracking-tight text-stone-500 transition-colors duration-300 hover:text-stone-300 ${isAbout ? "visible" : "invisible pointer-events-none"}`}
+          className={`text-sm sm:text-lg font-light tracking-tight text-stone-500 transition-colors duration-300 hover:text-stone-300 ${!isRoot ? "visible" : "invisible pointer-events-none"}`}
         >
           ← back
         </Link>
