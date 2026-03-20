@@ -16,31 +16,37 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   return (
     <div>
       <div className="max-w-2xl">
-        <h1 className="text-2xl font-light tracking-tight text-stone-100 sm:text-4xl">
-          {project.title}
-        </h1>
-        <p className="mt-2 text-base italic text-stone-500">"{project.shortDescription}"</p>
+        <div className="flex items-baseline gap-3">
+          <h1 className="text-2xl font-light tracking-tight text-stone-200 sm:text-4xl">
+            {project.title}
+          </h1>
+          <span className="text-sm text-stone-600 sm:text-base">{project.category}</span>
+        </div>
 
-        <p className="mt-6 text-sm leading-relaxed text-stone-400 sm:text-base">
+        {project.shortDescription && (
+          <p className="mt-1 text-sm italic text-stone-600 sm:text-base">"{project.shortDescription}"</p>
+        )}
+
+        <p className="mt-1 text-sm leading-relaxed text-stone-500 sm:text-base">
           {project.description}
         </p>
 
-        <ul className="mt-6 flex flex-wrap gap-1.5">
+        <ul className="mt-4 flex flex-wrap gap-1.5">
           {project.stack.map((item) => (
             <li
               key={item}
-              className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-500"
+              className="rounded border border-stone-700 px-1.5 py-0 text-[10px] text-stone-500"
             >
               {item}
             </li>
           ))}
         </ul>
 
-        <div className="mt-6 flex gap-2">
+        <div className="mt-4 flex gap-1.5">
           {project.liveUrl && (
             <button
               onClick={() => setShowVideo(true)}
-              className="inline-flex items-center rounded bg-stone-100 px-4 py-2 text-xs font-medium text-stone-900 transition-colors duration-200 hover:bg-white"
+              className="inline-flex items-center rounded bg-stone-100 px-3 py-1 text-xs font-medium text-stone-900 transition-colors duration-200 hover:bg-white"
             >
               Watch Demo
             </button>
@@ -50,7 +56,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded border border-stone-700 px-4 py-2 text-xs font-medium text-stone-300 transition-colors duration-200 hover:border-stone-500 hover:text-stone-100"
+              className="inline-flex items-center rounded border border-stone-700 px-3 py-1 text-xs font-medium text-stone-300 transition-colors duration-200 hover:border-stone-500 hover:text-stone-100"
             >
               GitHub
             </a>
