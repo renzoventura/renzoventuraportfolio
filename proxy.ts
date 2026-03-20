@@ -11,7 +11,7 @@ function isMainHost(host: string): boolean {
   return hostname === "localhost" || hostname === "www.renzoventura.com";
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const host = request.headers.get("host") ?? "";
   const { pathname } = request.nextUrl;
 
