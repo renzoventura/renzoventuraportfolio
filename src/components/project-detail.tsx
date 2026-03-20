@@ -54,7 +54,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       </div>
 
       {project.screenshots && project.screenshots.length > 0 && (
-        <div className="mt-10">
+        <div className="mt-2">
           <ScreenshotFilmstrip screenshots={project.screenshots} projectTitle={project.title} />
         </div>
       )}

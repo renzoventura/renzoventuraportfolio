@@ -34,7 +34,6 @@ function ScreenshotImage({ src, alt }: { src: string; alt: string }) {
 
 const PER_PAGE = 4;
 const GAP = 12;
-const PADDING = 24;
 
 function NavButton({
   onClick,
@@ -52,13 +51,13 @@ function NavButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      className={`shrink-0 rounded-full border border-stone-700 bg-stone-800 p-2.5 text-stone-300 transition-all duration-200 hover:border-stone-500 hover:text-white ${
-        disabled ? "cursor-not-allowed opacity-25" : "cursor-pointer opacity-100"
+      className={`shrink-0 rounded-full bg-stone-200 p-2 text-stone-800 transition-all duration-200 hover:bg-white ${
+        disabled ? "cursor-not-allowed opacity-20" : "cursor-pointer opacity-100"
       }`}
     >
       <svg
-        width="18"
-        height="18"
+        width="16"
+        height="16"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -94,9 +93,10 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
     return () => ro.disconnect();
   }, []);
 
-  const availableWidth = containerWidth - PADDING * 2;
-  const itemWidth = availableWidth > 0 ? (availableWidth - GAP * (PER_PAGE - 1)) / PER_PAGE : 0;
-  const offset = page * (availableWidth + GAP);
+  // Math.floor prevents fractional pixels causing the 5th image to peek
+  const itemWidth = containerWidth > 0 ? Math.floor((containerWidth - GAP * (PER_PAGE - 1)) / PER_PAGE) : 0;
+  const pageShift = PER_PAGE * (itemWidth + GAP);
+  const offset = page * pageShift;
 
   // Mobile scroll state
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -146,11 +146,11 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
           <button
             onClick={() => scrollMobile("left")}
             aria-label="Scroll left"
-            className={`absolute left-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-800/80 p-2 text-stone-300 backdrop-blur-sm transition-opacity duration-200 hover:text-white sm:left-2 ${
+            className={`absolute left-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-200 p-1 text-stone-800 transition-opacity duration-200 hover:bg-white sm:left-2 ${
               canScrollLeft ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
@@ -158,11 +158,11 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
           <button
             onClick={() => scrollMobile("right")}
             aria-label="Scroll right"
-            className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-800/80 p-2 text-stone-300 backdrop-blur-sm transition-opacity duration-200 hover:text-white sm:right-2 ${
+            className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-200 p-1 text-stone-800 transition-opacity duration-200 hover:bg-white sm:right-2 ${
               canScrollRight ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
@@ -170,7 +170,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
       </div>
 
       {/* Desktop: [prev] [4-up carousel] [next] */}
-      <div className="hidden items-center gap-3 lg:flex">
+      <div className="hidden items-center gap-1.5 lg:flex">
         <NavButton
           onClick={() => setPage((p) => p - 1)}
           disabled={!canPrev}
@@ -178,7 +178,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
           direction="left"
         />
 
-        <div ref={containerRef} className="flex-1 overflow-hidden rounded-2xl bg-stone-900 py-8" style={{ padding: PADDING }}>
+        <div ref={containerRef} className="flex-1 overflow-hidden rounded-2xl bg-stone-900 py-6">
           <div
             className="flex"
             style={{
@@ -192,7 +192,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
                 key={i}
                 className="relative shrink-0 overflow-hidden rounded-xl"
                 style={{
-                  width: itemWidth > 0 ? itemWidth : `calc((100% - ${GAP * (PER_PAGE - 1)}px) / ${PER_PAGE})`,
+                  width: itemWidth > 0 ? `${itemWidth}px` : `calc((100% - ${GAP * (PER_PAGE - 1)}px) / ${PER_PAGE})`,
                   aspectRatio: "9 / 19.5",
                 }}
               >
