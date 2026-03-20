@@ -19,7 +19,7 @@ export function ProjectTile({ project }: ProjectTileProps) {
           </div>
           <p className="mt-1 text-xs leading-relaxed text-stone-500 sm:text-sm">{project.description}</p>
           <ul className="mt-2 flex flex-wrap gap-1.5">
-            {project.stack.map((item) => (
+            {project.stack.slice(0, 3).map((item) => (
               <li
                 key={item}
                 className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600"
@@ -27,6 +27,11 @@ export function ProjectTile({ project }: ProjectTileProps) {
                 {item}
               </li>
             ))}
+            {project.stack.length > 3 && (
+              <li className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600">
+                +{project.stack.length - 3}
+              </li>
+            )}
           </ul>
         </div>
         <span className="mt-0.5 shrink-0 text-stone-600 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-stone-400">
