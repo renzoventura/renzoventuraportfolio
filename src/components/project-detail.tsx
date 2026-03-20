@@ -1,6 +1,5 @@
-import Image from "next/image";
-
 import type { Project } from "@/src/data/projects";
+import { ScreenshotFilmstrip } from "@/src/components/screenshot-filmstrip";
 
 type ProjectDetailProps = {
   project: Project;
@@ -53,22 +52,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       </div>
 
       {project.screenshots && project.screenshots.length > 0 && (
-        <div className="mt-10 flex flex-wrap gap-4">
-          {project.screenshots.map((src, i) => (
-            <div
-              key={i}
-              className="relative overflow-hidden rounded-sm"
-              style={{ width: 220, aspectRatio: "473 / 1024" }}
-            >
-              <Image
-                src={src}
-                alt={`${project.title} screenshot ${i + 1}`}
-                fill
-                className="object-cover"
-                sizes="220px"
-              />
-            </div>
-          ))}
+        <div className="mt-10">
+          <ScreenshotFilmstrip screenshots={project.screenshots} projectTitle={project.title} />
         </div>
       )}
     </div>
