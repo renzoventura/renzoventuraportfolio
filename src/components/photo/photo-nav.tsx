@@ -26,7 +26,7 @@ export function PhotoNav() {
 
   return (
     <nav
-      className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-5 backdrop-blur-sm transition-colors duration-300 sm:px-10 ${
+      className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-5 backdrop-blur-sm transition-colors duration-300 sm:px-10 lg:px-16 ${
         dark ? "bg-[#1c1917]/90" : "bg-[#f7f4f0]/90"
       }`}
     >

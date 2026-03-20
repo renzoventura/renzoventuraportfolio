@@ -46,7 +46,9 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex w-14 items-center gap-1 ${labelClass}`}
+        className={`flex items-center gap-1 rounded-full border px-3 py-1 transition-colors duration-200 ${
+          dark ? "border-stone-700 hover:border-stone-500" : "border-stone-300 hover:border-stone-400"
+        } ${labelClass}`}
       >
         {active === "code" ? "CODE" : "FILM"}
         <svg

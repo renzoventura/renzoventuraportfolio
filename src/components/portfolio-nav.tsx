@@ -16,7 +16,7 @@ export function PortfolioNav() {
     }`;
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-[#1c1917]/90 px-6 py-5 backdrop-blur-sm sm:px-10">
+    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-[#1c1917]/90 px-6 py-5 backdrop-blur-sm sm:px-10 lg:px-16">
       <div>
         <Link
           href="/"
@@ -25,7 +25,7 @@ export function PortfolioNav() {
           ← back
         </Link>
       </div>
-      <div className="flex items-center gap-4 sm:gap-8">
+      <div className="flex items-center gap-4 sm:gap-6">
         <div className="flex items-center gap-4 sm:gap-6">
           <Link href="/" className={linkClass(!isAbout)}>
             work
