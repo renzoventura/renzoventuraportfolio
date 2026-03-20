@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://photo.renzoventura.com"),
+  icons: {
+    icon: "/photo-icon.png",
+    apple: "/photo-apple-icon.png",
+  },
   title: {
     absolute: "Renzo Ventura | work",
     template: "%s | Renzo Ventura",
