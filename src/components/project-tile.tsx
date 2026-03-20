@@ -9,7 +9,7 @@ type ProjectTileProps = {
 
 export function ProjectTile({ project }: ProjectTileProps) {
   return (
-    <article className="flex flex-col gap-3 rounded-sm bg-stone-800/30 px-5 py-4">
+    <article className="flex flex-col gap-3 rounded-sm bg-stone-700/30 px-5 py-4">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex items-baseline gap-2">
@@ -30,16 +30,16 @@ export function ProjectTile({ project }: ProjectTileProps) {
       </div>
 
       <ul className="flex flex-wrap gap-1.5">
-        {project.stack.slice(0, 3).map((item) => (
+        {project.stack.map((item, i) => (
           <li
             key={item}
-            className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600"
+            className={`rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600 ${i >= 3 ? "hidden sm:flex" : ""}`}
           >
             {item}
           </li>
         ))}
         {project.stack.length > 3 && (
-          <li className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600">
+          <li className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600 sm:hidden">
             +{project.stack.length - 3}
           </li>
         )}
