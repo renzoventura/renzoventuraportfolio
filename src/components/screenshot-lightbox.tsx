@@ -117,7 +117,7 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
                 loaded ? "opacity-100" : "opacity-0"
               }`}
               priority
-              quality={65}
+              quality={30}
               sizes="(max-width: 640px) 70vw, (max-width: 1024px) 50vw, 320px"
               onLoad={() => setLoaded(true)}
             />
