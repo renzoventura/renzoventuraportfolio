@@ -18,7 +18,7 @@ export function ProjectTile({ project }: ProjectTileProps) {
             <span className="text-xs text-stone-600">{project.category}</span>
           </div>
           <p className="mt-1 text-xs leading-relaxed text-stone-500 sm:text-sm">{project.description}</p>
-          <ul className="mt-2 flex flex-wrap gap-1.5">
+          <ul className="mt-2 flex flex-nowrap gap-1.5 overflow-hidden">
             {project.stack.slice(0, 3).map((item) => (
               <li
                 key={item}
