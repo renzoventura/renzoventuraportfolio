@@ -13,7 +13,14 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const otherLabel = active === "code" ? "art" : "dev";
-  const otherHref = active === "code" ? "/photo" : "/";
+
+  // When on the photo subdomain, "/" stays on the photo site — use an absolute URL to cross back to the portfolio.
+  const otherHref =
+    active === "code"
+      ? "/photo"
+      : typeof window !== "undefined" && window.location.hostname === "photo.localhost"
+        ? `${window.location.protocol}//localhost:${window.location.port}`
+        : "https://www.renzoventura.com";
 
   const labelClass = `text-xs sm:text-sm font-light tracking-widest uppercase transition-colors duration-300 cursor-pointer select-none ${
     dark ? "text-stone-100 hover:text-stone-300" : "text-stone-900 hover:text-stone-600"
@@ -55,7 +62,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
 
       {open && (
         <div className={dropdownClass}>
-          <Link
+          <a
             href={otherHref}
             className={`block px-4 py-1.5 transition-colors duration-200 ${
               dark ? "hover:text-stone-200" : "hover:text-stone-700"
@@ -63,7 +70,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
             onClick={() => setOpen(false)}
           >
             {otherLabel}
-          </Link>
+          </a>
         </div>
       )}
     </div>
