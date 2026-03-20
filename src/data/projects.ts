@@ -16,7 +16,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "lastk",
+    id: "stride",
     title: "Stride",
     category: "iOS App",
     shortDescription: "Your performance is art. Stride is the brush.",
@@ -33,9 +33,9 @@ export const projects: Project[] = [
       "Keychain",
       "iOS 26+",
     ],
-    githubUrl: "https://github.com/renzoventura/lastk",
-    liveUrl: "https://github.com/user-attachments/assets/0beaf45c-fbfe-4d19-985d-9008ee2cae51",
-    demoImageUrl: "/projects/lastk_screenshot.jpg",
+    githubUrl: "https://github.com/renzoventura/stride",
+    liveUrl: "https://github.com/user-attachments/assets/33605762-77ba-4292-964b-517586f2a8a4",
+    demoImageUrl: "/projects/stride_screenshot.jpg",
     screenshots: [
       "/screenshots/stride/1.PNG",
       "/screenshots/stride/2.PNG",

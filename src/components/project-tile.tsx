@@ -1,13 +1,19 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 import type { Project } from "@/src/data/projects";
 import { ScreenshotFilmstrip } from "@/src/components/screenshot-filmstrip";
+import { VideoModal } from "@/src/components/video-modal";
 
 type ProjectTileProps = {
   project: Project;
 };
 
 export function ProjectTile({ project }: ProjectTileProps) {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <article className="flex flex-col gap-3 rounded-sm bg-stone-700/30 px-5 py-4">
       <div className="flex items-start justify-between gap-4">
@@ -29,17 +35,17 @@ export function ProjectTile({ project }: ProjectTileProps) {
         </Link>
       </div>
 
-      <ul className="flex flex-wrap gap-1.5">
+      <ul className="flex flex-wrap gap-1">
         {project.stack.map((item, i) => (
           <li
             key={item}
-            className={`rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600 ${i >= 3 ? "hidden sm:flex" : ""}`}
+            className={`rounded border border-stone-700 px-1.5 py-0 text-[10px] text-stone-500 ${i >= 3 ? "hidden sm:flex" : ""}`}
           >
             {item}
           </li>
         ))}
         {project.stack.length > 3 && (
-          <li className="rounded border border-stone-800 px-2 py-0.5 text-xs text-stone-600 sm:hidden">
+          <li className="rounded border border-stone-700 px-1.5 py-0 text-[10px] text-stone-500 sm:hidden">
             +{project.stack.length - 3}
           </li>
         )}
@@ -47,14 +53,12 @@ export function ProjectTile({ project }: ProjectTileProps) {
 
       <div className="flex gap-1.5">
         {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setShowVideo(true)}
             className="inline-flex items-center rounded bg-stone-100 px-3 py-1 text-xs font-medium text-stone-900 transition-colors duration-200 hover:bg-white"
           >
             Watch Demo
-          </a>
+          </button>
         )}
         {project.githubUrl && (
           <a
@@ -70,6 +74,10 @@ export function ProjectTile({ project }: ProjectTileProps) {
 
       {project.screenshots && project.screenshots.length > 0 && (
         <ScreenshotFilmstrip screenshots={project.screenshots} projectTitle={project.title} embedded />
+      )}
+
+      {showVideo && project.liveUrl && (
+        <VideoModal src={project.liveUrl} onClose={() => setShowVideo(false)} />
       )}
     </article>
   );

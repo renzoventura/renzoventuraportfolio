@@ -1,11 +1,18 @@
+"use client";
+
+import { useState } from "react";
+
 import type { Project } from "@/src/data/projects";
 import { ScreenshotFilmstrip } from "@/src/components/screenshot-filmstrip";
+import { VideoModal } from "@/src/components/video-modal";
 
 type ProjectDetailProps = {
   project: Project;
 };
 
 export function ProjectDetail({ project }: ProjectDetailProps) {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <div>
       <div className="max-w-2xl">
@@ -31,14 +38,12 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
         <div className="mt-6 flex gap-2">
           {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setShowVideo(true)}
               className="inline-flex items-center rounded bg-stone-100 px-4 py-2 text-xs font-medium text-stone-900 transition-colors duration-200 hover:bg-white"
             >
               Watch Demo
-            </a>
+            </button>
           )}
           {project.githubUrl && (
             <a
@@ -57,6 +62,10 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         <div className="mt-2">
           <ScreenshotFilmstrip screenshots={project.screenshots} projectTitle={project.title} />
         </div>
+      )}
+
+      {showVideo && project.liveUrl && (
+        <VideoModal src={project.liveUrl} onClose={() => setShowVideo(false)} />
       )}
     </div>
   );
