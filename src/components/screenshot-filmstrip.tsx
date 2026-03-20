@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { ScreenshotLightbox } from "@/src/components/screenshot-lightbox";
 
 type ScreenshotFilmstripProps = {
   screenshots: string[];
@@ -79,6 +80,7 @@ function NavButton({
 
 export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = false }: ScreenshotFilmstripProps) {
   const [page, setPage] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Desktop carousel measurement
   const containerRef = useRef<HTMLDivElement>(null);
@@ -135,6 +137,12 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
 
   return (
     <div>
+      <ScreenshotLightbox
+        screenshots={screenshots}
+        initialIndex={lightboxIndex}
+        projectTitle={projectTitle}
+        onClose={() => setLightboxIndex(null)}
+      />
       {/* Mobile: free-flowing scroll */}
       <div className={`lg:hidden ${embedded ? "py-2" : "-mx-6 bg-stone-900 py-8 sm:-mx-10"}`}>
         <div className="relative">
@@ -144,13 +152,15 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
             style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
             {screenshots.map((src, i) => (
-              <div
+              <button
                 key={i}
-                className="relative shrink-0 overflow-hidden rounded-2xl"
+                onClick={() => setLightboxIndex(i)}
+                className="relative shrink-0 cursor-zoom-in overflow-hidden rounded-2xl"
                 style={{ width: "clamp(150px, 50vw, 195px)", aspectRatio: "9 / 19.5" }}
+                aria-label={`View ${projectTitle} screenshot ${i + 1}`}
               >
                 <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} priority={i < 2} />
-              </div>
+              </button>
             ))}
           </div>
 
@@ -201,16 +211,18 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
             }}
           >
             {screenshots.map((src, i) => (
-              <div
+              <button
                 key={i}
-                className="relative shrink-0 overflow-hidden rounded-xl"
+                onClick={() => setLightboxIndex(i)}
+                className="relative shrink-0 cursor-zoom-in overflow-hidden rounded-xl"
                 style={{
                   width: itemWidth > 0 ? `${itemWidth}px` : `calc((100% - ${GAP * (PER_PAGE - 1)}px) / ${PER_PAGE})`,
                   aspectRatio: "9 / 19.5",
                 }}
+                aria-label={`View ${projectTitle} screenshot ${i + 1}`}
               >
                 <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} priority={i < 4} />
-              </div>
+              </button>
             ))}
           </div>
         </div>
