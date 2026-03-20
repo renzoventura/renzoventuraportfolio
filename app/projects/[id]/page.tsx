@@ -28,7 +28,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-[#1c1917]">
       <PortfolioNav />
-      <main className="px-6 pb-16 pt-24 sm:px-10 sm:pt-32 lg:px-16">
+      <main className="px-6 pb-24 pt-[59px] sm:px-10 sm:pt-32 lg:px-16">
         <ProjectDetail project={project} />
       </main>
     </div>

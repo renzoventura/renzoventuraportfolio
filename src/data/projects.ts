@@ -1,3 +1,5 @@
+import { strideScreenshots } from "@/src/data/projects/stride";
+
 export type Project = {
   id: string;
   title: string;
@@ -36,16 +38,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/renzoventura/stride",
     liveUrl: "https://github.com/user-attachments/assets/33605762-77ba-4292-964b-517586f2a8a4",
     demoImageUrl: "/projects/stride_screenshot.jpg",
-    screenshots: [
-      "/screenshots/stride/1.PNG",
-      "/screenshots/stride/2.PNG",
-      "/screenshots/stride/3.PNG",
-      "/screenshots/stride/4.PNG",
-      "/screenshots/stride/5.PNG",
-      "/screenshots/stride/6.PNG",
-      "/screenshots/stride/7.PNG",
-      "/screenshots/stride/8.PNG",
-    ],
+    screenshots: strideScreenshots,
     recent: true,
     featured: true,
     date: "2026-02-17",

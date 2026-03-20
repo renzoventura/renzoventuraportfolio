@@ -20,7 +20,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
         </h1>
       </header>
 
-      <main className="px-6 pb-16 sm:px-10 lg:px-16">
+      <main className="px-6 pb-24 sm:px-10 lg:px-16">
         <div className="mb-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <a
             href={profile.links.linkedin}

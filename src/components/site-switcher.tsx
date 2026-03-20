@@ -12,7 +12,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const otherLabel = active === "code" ? "photo" : "dev";
+  const otherLabel = active === "code" ? "FILM" : "CODE";
 
   // When on the photo subdomain, "/" stays on the photo site — use an absolute URL to cross back to the portfolio.
   const otherHref =
@@ -22,13 +22,13 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
         ? `${window.location.protocol}//localhost:${window.location.port}`
         : "https://www.renzoventura.com";
 
-  const labelClass = `text-xs sm:text-sm font-light tracking-widest uppercase transition-colors duration-300 cursor-pointer select-none ${
+  const labelClass = `text-xs sm:text-sm font-light tracking-widest transition-colors duration-300 cursor-pointer select-none ${
     dark ? "text-stone-100 hover:text-stone-300" : "text-stone-900 hover:text-stone-600"
   }`;
   const chevronClass = `transition-transform duration-200 ${open ? "rotate-180" : ""} ${
     dark ? "text-stone-500" : "text-stone-400"
   }`;
-  const dropdownClass = `absolute right-0 top-full mt-2 min-w-[80px] rounded-sm py-1 text-xs font-light tracking-widest uppercase ${
+  const dropdownClass = `absolute right-0 top-full mt-2 min-w-[80px] rounded-sm py-1 text-xs font-light tracking-widest ${
     dark ? "bg-[#2a2522] text-stone-400 hover:text-stone-200" : "bg-[#ece9e4] text-stone-500 hover:text-stone-700"
   }`;
 
@@ -46,9 +46,9 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex w-16 items-center gap-1 ${labelClass}`}
+        className={`flex w-14 items-center gap-1 ${labelClass}`}
       >
-        {active === "code" ? "dev" : "photo"}
+        {active === "code" ? "CODE" : "FILM"}
         <svg
           className={chevronClass}
           width="10"
