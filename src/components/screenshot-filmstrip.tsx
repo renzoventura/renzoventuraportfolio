@@ -79,9 +79,6 @@ function NavButton({
 
 export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = false }: ScreenshotFilmstripProps) {
   const [page, setPage] = useState(0);
-  const totalPages = Math.ceil(screenshots.length / PER_PAGE);
-  const canPrev = page > 0;
-  const canNext = page < totalPages - 1;
 
   // Desktop carousel measurement
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,9 +93,16 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
   }, []);
 
   // Math.floor prevents fractional pixels causing the 5th image to peek
-  const itemWidth = containerWidth > 0 ? Math.floor((containerWidth - GAP * (PER_PAGE - 1)) / PER_PAGE) : 0;
+  const itemWidth = containerWidth > 0 ? Math.min(160, Math.floor((containerWidth - GAP * (PER_PAGE - 1)) / PER_PAGE)) : 0;
   const pageShift = PER_PAGE * (itemWidth + GAP);
-  const offset = page * pageShift;
+  const totalContentWidth = screenshots.length * itemWidth + (screenshots.length - 1) * GAP;
+  const allFit = containerWidth > 0 && totalContentWidth <= containerWidth;
+  const totalPages = allFit ? 1 : Math.ceil(screenshots.length / PER_PAGE);
+  // Clamp offset so the last page never shows empty trailing space
+  const maxOffset = Math.max(0, totalContentWidth - containerWidth);
+  const offset = Math.min(page * pageShift, maxOffset);
+  const canPrev = page > 0;
+  const canNext = page < totalPages - 1;
 
   // Mobile scroll state
   const mobileScrollRef = useRef<HTMLDivElement>(null);
@@ -117,7 +121,12 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
     if (!el) return;
     updateMobileScroll();
     el.addEventListener("scroll", updateMobileScroll, { passive: true });
-    return () => el.removeEventListener("scroll", updateMobileScroll);
+    const ro = new ResizeObserver(() => updateMobileScroll());
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", updateMobileScroll);
+      ro.disconnect();
+    };
   }, [updateMobileScroll]);
 
   const scrollMobile = (dir: "left" | "right") => {
@@ -173,12 +182,14 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
 
       {/* Desktop: [prev] [4-up carousel] [next] */}
       <div className="hidden items-center gap-1.5 lg:flex">
-        <NavButton
-          onClick={() => setPage((p) => p - 1)}
-          disabled={!canPrev}
-          label="Previous screenshots"
-          direction="left"
-        />
+        {totalPages > 1 && (
+          <NavButton
+            onClick={() => setPage((p) => p - 1)}
+            disabled={!canPrev}
+            label="Previous screenshots"
+            direction="left"
+          />
+        )}
 
         <div ref={containerRef} className={`flex-1 overflow-hidden rounded-2xl py-4 ${embedded ? "" : "bg-stone-900 py-6"}`}>
           <div
@@ -204,12 +215,14 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
           </div>
         </div>
 
-        <NavButton
-          onClick={() => setPage((p) => p + 1)}
-          disabled={!canNext}
-          label="Next screenshots"
-          direction="right"
-        />
+        {totalPages > 1 && (
+          <NavButton
+            onClick={() => setPage((p) => p + 1)}
+            disabled={!canNext}
+            label="Next screenshots"
+            direction="right"
+          />
+        )}
       </div>
     </div>
   );

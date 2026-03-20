@@ -11,6 +11,7 @@ type HomeExperienceProps = {
 export function HomeExperience({ profile, projects }: HomeExperienceProps) {
   return (
     <div className="min-h-screen bg-[#1c1917]">
+      <div className="max-w-[1630px]">
       <PortfolioNav />
 
       <header className="px-6 pb-4 pt-[59px] sm:pb-8 sm:pt-32 sm:px-10 lg:px-16">
@@ -62,6 +63,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
           © {new Date().getFullYear()} Renzo Ventura
         </p>
       </footer>
+      </div>
     </div>
   );
 }
