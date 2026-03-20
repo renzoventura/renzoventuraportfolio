@@ -12,7 +12,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const otherLabel = active === "code" ? "art" : "dev";
+  const otherLabel = active === "code" ? "photo" : "dev";
 
   // When on the photo subdomain, "/" stays on the photo site — use an absolute URL to cross back to the portfolio.
   const otherHref =
@@ -46,9 +46,9 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex w-10 items-center gap-1 ${labelClass}`}
+        className={`flex w-16 items-center gap-1 ${labelClass}`}
       >
-        {active === "code" ? "dev" : "art"}
+        {active === "code" ? "dev" : "photo"}
         <svg
           className={chevronClass}
           width="10"

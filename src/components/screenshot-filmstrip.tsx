@@ -9,7 +9,7 @@ type ScreenshotFilmstripProps = {
   embedded?: boolean;
 };
 
-function ScreenshotImage({ src, alt }: { src: string; alt: string }) {
+function ScreenshotImage({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -25,8 +25,9 @@ function ScreenshotImage({ src, alt }: { src: string; alt: string }) {
         className={`object-cover transition-opacity duration-700 ease-in-out ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
-        sizes="(max-width: 1024px) 55vw, 195px"
-        quality={50}
+        sizes="195px"
+        quality={30}
+        priority={priority}
         onLoad={() => setLoaded(true)}
       />
     </div>
@@ -139,7 +140,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
                 className="relative shrink-0 overflow-hidden rounded-2xl"
                 style={{ width: "clamp(150px, 50vw, 195px)", aspectRatio: "9 / 19.5" }}
               >
-                <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} />
+                <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} priority={i < 2} />
               </div>
             ))}
           </div>
@@ -197,7 +198,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
                   aspectRatio: "9 / 19.5",
                 }}
               >
-                <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} />
+                <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} priority={i < 4} />
               </div>
             ))}
           </div>
