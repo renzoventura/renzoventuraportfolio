@@ -10,7 +10,7 @@ export function PhotoNav() {
   const { theme } = usePhotoTheme();
   const dark = theme === "dark";
   const pathname = usePathname();
-  const isAbout = pathname === "/photo/about";
+  const isAbout = pathname === "/about" || pathname === "/photo/about";
 
   const linkClass = (active: boolean) =>
     `text-sm sm:text-lg font-light tracking-tight transition-colors duration-300 ${
@@ -19,7 +19,7 @@ export function PhotoNav() {
         : dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-600"
     }`;
 
-  const isRoot = pathname === "/photo";
+  const isRoot = pathname === "/" || pathname === "/photo";
   const backLinkClass = `text-sm sm:text-lg font-light tracking-tight transition-colors duration-300 ${
     dark ? "text-stone-500 hover:text-stone-300" : "text-stone-400 hover:text-stone-600"
   }`;
