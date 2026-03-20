@@ -24,7 +24,7 @@ function ScreenshotImage({ src, alt }: { src: string; alt: string }) {
         className={`object-cover transition-opacity duration-700 ease-in-out ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
-        sizes="(max-width: 640px) 55vw, 220px"
+        sizes="(max-width: 1024px) 55vw, 195px"
         quality={50}
         onLoad={() => setLoaded(true)}
       />
@@ -32,58 +32,111 @@ function ScreenshotImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+const PER_PAGE = 4;
+const GAP = 12;
+const PADDING = 24;
+
+function NavButton({
+  onClick,
+  disabled,
+  label,
+  direction,
+}: {
+  onClick: () => void;
+  disabled: boolean;
+  label: string;
+  direction: "left" | "right";
+}) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className={`shrink-0 rounded-full border border-stone-700 bg-stone-800 p-2.5 text-stone-300 transition-all duration-200 hover:border-stone-500 hover:text-white ${
+        disabled ? "cursor-not-allowed opacity-25" : "cursor-pointer opacity-100"
+      }`}
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {direction === "left" ? (
+          <polyline points="15 18 9 12 15 6" />
+        ) : (
+          <polyline points="9 18 15 12 9 6" />
+        )}
+      </svg>
+    </button>
+  );
+}
+
 export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFilmstripProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState(0);
+  const totalPages = Math.ceil(screenshots.length / PER_PAGE);
+  const canPrev = page > 0;
+  const canNext = page < totalPages - 1;
+
+  // Desktop carousel measurement
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => setContainerWidth(entry.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const availableWidth = containerWidth - PADDING * 2;
+  const itemWidth = availableWidth > 0 ? (availableWidth - GAP * (PER_PAGE - 1)) / PER_PAGE : 0;
+  const offset = page * (availableWidth + GAP);
+
+  // Mobile scroll state
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const updateScrollState = useCallback(() => {
-    const el = scrollRef.current;
+  const updateMobileScroll = useCallback(() => {
+    const el = mobileScrollRef.current;
     if (!el) return;
     setCanScrollLeft(el.scrollLeft > 8);
     setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8);
   }, []);
 
   useEffect(() => {
-    const el = scrollRef.current;
+    const el = mobileScrollRef.current;
     if (!el) return;
-    updateScrollState();
-    el.addEventListener("scroll", updateScrollState, { passive: true });
-    return () => el.removeEventListener("scroll", updateScrollState);
-  }, [updateScrollState]);
+    updateMobileScroll();
+    el.addEventListener("scroll", updateMobileScroll, { passive: true });
+    return () => el.removeEventListener("scroll", updateMobileScroll);
+  }, [updateMobileScroll]);
 
-  const scroll = (dir: "left" | "right") => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const item = el.querySelector<HTMLElement>("[data-screenshot]");
-    const itemWidth = item ? item.offsetWidth + 12 : 200;
-    el.scrollBy({ left: dir === "left" ? -itemWidth : itemWidth, behavior: "smooth" });
+  const scrollMobile = (dir: "left" | "right") => {
+    mobileScrollRef.current?.scrollBy({ left: dir === "left" ? -200 : 200, behavior: "smooth" });
   };
 
   return (
-    <>
-      {/* Mobile: full-bleed filmstrip with arrows */}
+    <div>
+      {/* Mobile: full-bleed free-flowing scroll */}
       <div className="-mx-6 bg-stone-900 py-8 sm:-mx-10 lg:hidden">
         <div className="relative">
           <div
-            ref={scrollRef}
+            ref={mobileScrollRef}
             className="flex gap-3 overflow-x-auto px-6 sm:px-10"
-            style={{
-              scrollSnapType: "x mandatory",
-              scrollbarWidth: "none",
-              WebkitOverflowScrolling: "touch",
-            }}
+            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
             {screenshots.map((src, i) => (
               <div
                 key={i}
-                data-screenshot
                 className="relative shrink-0 overflow-hidden rounded-2xl"
-                style={{
-                  width: "clamp(150px, 50vw, 210px)",
-                  aspectRatio: "9 / 19.5",
-                  scrollSnapAlign: "start",
-                }}
+                style={{ width: "clamp(150px, 50vw, 195px)", aspectRatio: "9 / 19.5" }}
               >
                 <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} />
               </div>
@@ -91,45 +144,71 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle }: ScreenshotFil
           </div>
 
           <button
-            onClick={() => scroll("left")}
+            onClick={() => scrollMobile("left")}
             aria-label="Scroll left"
-            className={`absolute left-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-800/80 p-2 text-stone-300 backdrop-blur-sm transition-opacity duration-200 hover:bg-stone-700/90 hover:text-white sm:left-2 ${
+            className={`absolute left-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-800/80 p-2 text-stone-300 backdrop-blur-sm transition-opacity duration-200 hover:text-white sm:left-2 ${
               canScrollLeft ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
 
           <button
-            onClick={() => scroll("right")}
+            onClick={() => scrollMobile("right")}
             aria-label="Scroll right"
-            className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-800/80 p-2 text-stone-300 backdrop-blur-sm transition-opacity duration-200 hover:bg-stone-700/90 hover:text-white sm:right-2 ${
+            className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-full bg-stone-800/80 p-2 text-stone-300 backdrop-blur-sm transition-opacity duration-200 hover:text-white sm:right-2 ${
               canScrollRight ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
         </div>
       </div>
 
-      {/* Desktop: 3-column grid, same width as content above */}
-      <div className="hidden rounded-2xl bg-stone-900 py-8 lg:block">
-        <div className="grid grid-cols-3 gap-1.5">
-          {screenshots.map((src, i) => (
-            <div
-              key={i}
-              className="relative overflow-hidden rounded-xl"
-              style={{ aspectRatio: "9 / 19.5", maxHeight: "220px" }}
-            >
-              <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} />
-            </div>
-          ))}
+      {/* Desktop: [prev] [4-up carousel] [next] */}
+      <div className="hidden items-center gap-3 lg:flex">
+        <NavButton
+          onClick={() => setPage((p) => p - 1)}
+          disabled={!canPrev}
+          label="Previous screenshots"
+          direction="left"
+        />
+
+        <div ref={containerRef} className="flex-1 overflow-hidden rounded-2xl bg-stone-900 py-8" style={{ padding: PADDING }}>
+          <div
+            className="flex"
+            style={{
+              gap: GAP,
+              transform: `translateX(-${offset}px)`,
+              transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
+          >
+            {screenshots.map((src, i) => (
+              <div
+                key={i}
+                className="relative shrink-0 overflow-hidden rounded-xl"
+                style={{
+                  width: itemWidth > 0 ? itemWidth : `calc((100% - ${GAP * (PER_PAGE - 1)}px) / ${PER_PAGE})`,
+                  aspectRatio: "9 / 19.5",
+                }}
+              >
+                <ScreenshotImage src={src} alt={`${projectTitle} screenshot ${i + 1}`} />
+              </div>
+            ))}
+          </div>
         </div>
+
+        <NavButton
+          onClick={() => setPage((p) => p + 1)}
+          disabled={!canNext}
+          label="Next screenshots"
+          direction="right"
+        />
       </div>
-    </>
+    </div>
   );
 }
