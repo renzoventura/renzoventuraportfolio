@@ -28,8 +28,8 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const chevronClass = `transition-transform duration-200 ${open ? "rotate-180" : ""} ${
     dark ? "text-stone-500" : "text-stone-400"
   }`;
-  const dropdownClass = `absolute right-0 top-full mt-2 min-w-[80px] rounded-sm py-1 text-xs font-light tracking-widest ${
-    dark ? "bg-[#2a2522] text-stone-400 hover:text-stone-200" : "bg-[#ece9e4] text-stone-500 hover:text-stone-700"
+  const dropdownClass = `absolute right-0 top-full min-w-full rounded-b-lg border border-t-0 py-1 text-xs font-light tracking-widest ${
+    dark ? "border-stone-700 bg-[#2a2522] text-stone-400" : "border-stone-300 bg-[#ece9e4] text-stone-500"
   }`;
 
   useEffect(() => {
@@ -46,7 +46,9 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex items-center gap-1 rounded-full border px-3 py-1 transition-colors duration-200 ${
+        className={`flex items-center gap-1 border px-3 py-1 transition-colors duration-200 ${
+          open ? "rounded-t-lg rounded-b-none" : "rounded-full"
+        } ${
           dark ? "border-stone-700 hover:border-stone-500" : "border-stone-300 hover:border-stone-400"
         } ${labelClass}`}
       >
