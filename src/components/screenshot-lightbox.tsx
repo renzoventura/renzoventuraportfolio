@@ -63,9 +63,13 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
   useEffect(() => {
     const el = filmstripRef.current;
     if (!el) return;
-    const thumb = el.children[index] as HTMLElement | undefined;
-    if (!thumb) return;
-    el.scrollTo({ left: thumb.offsetLeft - el.clientWidth / 2 + thumb.offsetWidth / 2, behavior: "smooth" });
+    const inner = el.firstElementChild as HTMLElement | undefined;
+    const thumb = inner?.children[index] as HTMLElement | undefined;
+    if (!inner || !thumb) return;
+    el.scrollTo({
+      left: inner.offsetLeft + thumb.offsetLeft - el.clientWidth / 2 + thumb.offsetWidth / 2,
+      behavior: "smooth",
+    });
   }, [index]);
 
   const onTouchStart = useCallback((e: React.TouchEvent) => {
@@ -175,9 +179,10 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
         <div className="relative z-10 w-full pb-6 pt-3">
           <div
             ref={filmstripRef}
-            className="flex gap-1.5 overflow-x-auto px-6 touch-pan-x"
+            className="overflow-x-auto touch-pan-x sm:text-center"
             style={{ scrollbarWidth: "none" }}
           >
+            <div className="inline-flex gap-1.5 px-6">
             {screenshots.map((s, i) => (
               <button
                 key={i}
@@ -199,6 +204,7 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
                 />
               </button>
             ))}
+            </div>
           </div>
         </div>
       )}
