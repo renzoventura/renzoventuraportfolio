@@ -72,6 +72,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
 
   // Swipe gestures
   const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if (filmstripRef.current?.contains(e.target as Node)) return;
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
   }, []);
@@ -211,7 +212,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
                   fill
                   className="object-cover"
                   priority
-                  quality={10}
+                  quality={20}
                   sizes="64px"
                 />
               </button>
