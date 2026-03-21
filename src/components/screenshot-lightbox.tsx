@@ -15,6 +15,8 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   // Open/close animation
   useEffect(() => {
@@ -55,6 +57,22 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
     };
   }, [initialIndex, handleKeyDown]);
 
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? next() : prev();
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  }, [prev, next]);
+
   if (initialIndex === null) return null;
 
   const src = screenshots[index];
@@ -67,6 +85,8 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
       role="dialog"
       aria-modal="true"
       aria-label={`${projectTitle} screenshot ${index + 1}`}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" onClick={onClose} />

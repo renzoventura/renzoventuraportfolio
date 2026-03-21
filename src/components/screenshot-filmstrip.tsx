@@ -148,7 +148,7 @@ export function ScreenshotFilmstrip({ screenshots, projectTitle, embedded = fals
         <div className="relative">
           <div
             ref={mobileScrollRef}
-            className={`flex gap-3 overflow-x-auto ${embedded ? "" : "px-6 sm:px-10"}`}
+            className={`flex gap-3 overflow-x-auto touch-pan-x ${embedded ? "" : "px-6 sm:px-10"}`}
             style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
           >
             {screenshots.map((src, i) => (

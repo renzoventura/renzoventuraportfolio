@@ -148,7 +148,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
             alt={displayed.alt}
             width={displayed.width}
             height={displayed.height}
-            className={`h-auto w-auto max-h-[70vh] max-w-[80vw] shadow-2xl transition-opacity duration-500 ${
+            className={`h-auto w-auto max-h-[82vh] max-w-[85vw] shadow-2xl transition-opacity duration-500 ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
             priority
@@ -158,16 +158,18 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
           />
 
           {/* Caption */}
-          <p className="mt-3 text-center text-xs uppercase tracking-widest text-white/45">
-            {displayed.title}
+          <p className="mt-3 flex flex-wrap justify-center text-xs uppercase tracking-widest text-white/45">
+            <span className="whitespace-nowrap">{displayed.title}</span>
             {displayed.location && (
-              <>
+              <span className="whitespace-nowrap">
                 <span className="mx-2 opacity-40">·</span>
                 {displayed.location}
-              </>
+              </span>
             )}
-            <span className="mx-2 opacity-40">·</span>
-            {displayed.year}
+            <span className="whitespace-nowrap">
+              <span className="mx-2 opacity-40">·</span>
+              {displayed.year}
+            </span>
           </p>
         </div>
 
@@ -190,7 +192,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
         <div className="relative z-10 w-full pb-6 pt-3">
           <div
             ref={filmstripRef}
-            className="flex gap-1.5 overflow-x-auto px-6"
+            className="flex gap-1.5 overflow-x-auto px-6 touch-pan-x"
             style={{ scrollbarWidth: "none" }}
           >
             {photos.map((photo, i) => (
@@ -208,7 +210,8 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
                   alt={photo.alt}
                   fill
                   className="object-cover"
-                  quality={20}
+                  priority
+                  quality={10}
                   sizes="64px"
                 />
               </button>
