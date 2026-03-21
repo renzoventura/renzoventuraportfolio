@@ -12,7 +12,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const otherLabel = active === "code" ? "FILM" : "CODE";
+  const otherLabel = active === "code" ? "film" : "code";
 
   // When on the photo subdomain, "/" stays on the photo site — use an absolute URL to cross back to the portfolio.
   const otherHref =
@@ -22,13 +22,13 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
         ? `${window.location.protocol}//localhost:${window.location.port}`
         : "https://www.renzoventura.com";
 
-  const labelClass = `text-xs sm:text-sm font-light tracking-widest transition-colors duration-300 cursor-pointer select-none ${
+  const labelClass = `font-mono text-xs sm:text-sm font-light tracking-widest transition-colors duration-300 cursor-pointer select-none ${
     dark ? "text-stone-100 hover:text-stone-300" : "text-stone-900 hover:text-stone-600"
   }`;
   const chevronClass = `transition-transform duration-200 ${open ? "rotate-180" : ""} ${
     dark ? "text-stone-500" : "text-stone-400"
   }`;
-  const dropdownClass = `absolute right-0 top-full min-w-full rounded-b-sm border border-t-0 py-1 text-xs font-light tracking-widest ${
+  const dropdownClass = `absolute right-0 top-full min-w-full rounded-b-sm border border-t-0 py-1 font-mono text-xs font-light tracking-widest ${
     dark ? "border-stone-700 bg-[#2a2522] text-stone-400" : "border-stone-300 bg-[#ece9e4] text-stone-500"
   }`;
 
@@ -46,13 +46,13 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex items-center gap-1 border px-3 py-1 transition-colors duration-200 ${
+        className={`flex items-center gap-1 border px-2 py-1 transition-colors duration-200 ${
           open ? "rounded-t-sm rounded-b-none" : "rounded-sm"
         } ${
           dark ? "border-stone-700 hover:border-stone-500" : "border-stone-300 hover:border-stone-400"
         } ${labelClass}`}
       >
-        {active === "code" ? "CODE" : "FILM"}
+        {active === "code" ? "code" : "film"}
         <svg
           className={chevronClass}
           width="10"
@@ -68,7 +68,7 @@ export function SiteSwitcher({ active, dark = true }: SiteSwitcherProps) {
         <div className={dropdownClass}>
           <a
             href={otherHref}
-            className={`block px-4 py-1.5 transition-colors duration-200 ${
+            className={`block px-2 py-1.5 transition-colors duration-200 ${
               dark ? "hover:text-stone-200" : "hover:text-stone-700"
             }`}
             onClick={() => setOpen(false)}
