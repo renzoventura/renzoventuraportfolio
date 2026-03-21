@@ -25,6 +25,7 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (initialIndex !== null) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIndex(initialIndex);
       setLoaded(false);
       requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
@@ -83,7 +84,7 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     const dy = e.changedTouches[0].clientY - touchStartY.current;
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      dx < 0 ? next() : prev();
+      if (dx < 0) { next(); } else { prev(); }
     }
     touchStartX.current = null;
     touchStartY.current = null;

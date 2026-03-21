@@ -42,7 +42,7 @@ export function PortfolioAboutContent() {
           </div>
 
           <div className="max-w-[63ch] text-sm font-light leading-relaxed text-stone-400 sm:text-xl sm:font-normal">
-            <p className="mb-6">Renzo Ventura is a Senior Software Engineer at Tabcorp, specialising in building reliable, user-first digital products at scale. Operating within a heavily regulated environment, delivering enterprise-grade systems for Australia's premier real-time mobile wagering platform.</p>
+            <p className="mb-6">Renzo Ventura is a Senior Software Engineer at Tabcorp, specialising in building reliable, user-first digital products at scale. Operating within a heavily regulated environment, delivering enterprise-grade systems for Australia&apos;s premier real-time mobile wagering platform.</p>
             <h2 className="mb-4 text-2xl font-light tracking-tight text-stone-500 sm:text-4xl">Get in touch</h2>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
               <a

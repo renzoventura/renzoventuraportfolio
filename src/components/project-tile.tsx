@@ -25,7 +25,7 @@ export function ProjectTile({ project }: ProjectTileProps) {
             <span className="text-xs text-stone-600">{project.category}</span>
           </div>
           {project.shortDescription && (
-            <p className="mt-0.5 text-[11px] italic text-stone-600">"{project.shortDescription}"</p>
+            <p className="mt-0.5 text-[11px] italic text-stone-600">&ldquo;{project.shortDescription}&rdquo;</p>
           )}
           <p className="text-xs leading-relaxed text-stone-500 sm:text-sm">{project.description}</p>
         </div>

@@ -3,7 +3,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -21,12 +20,11 @@ const ThemeContext = createContext<ThemeContextValue>({
 });
 
 export function PhotoThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-
-  useEffect(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "dark";
     const saved = localStorage.getItem("photo-theme");
-    if (saved === "light" || saved === "dark") setTheme(saved);
-  }, []);
+    return saved === "light" || saved === "dark" ? saved : "dark";
+  });
 
   function toggle() {
     setTheme((prev) => {

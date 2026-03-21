@@ -83,19 +83,22 @@ type Props = {
 
 export function PhotoGallery({ photos: allPhotos }: Props) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [orderedPhotos, setOrderedPhotos] = useState<Photo[]>(allPhotos);
+  const [orderedPhotos] = useState<Photo[]>(() => {
+    const featured = allPhotos.filter((p) => p.featured);
+    const regular = allPhotos.filter((p) => !p.featured);
+    const lastFeatured = featured.length > 0 ? featured[featured.length - 1] : undefined;
+    return orderPhotos(shufflePhotos(regular, lastFeatured), featured);
+  });
   const [spanMap, setSpanMap] = useState<Record<string, number>>({});
   const [cols, setCols] = useState(3);
   const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const lightboxOpen = useRef(false);
-  const orderedPhotosRef = useRef(orderedPhotos);
-  orderedPhotosRef.current = orderedPhotos;
 
   const handleSelect = useCallback((photo: Photo) => {
     lightboxOpen.current = true;
-    setSelectedIndex(orderedPhotosRef.current.findIndex((p) => p.id === photo.id));
-  }, []);
+    setSelectedIndex(orderedPhotos.findIndex((p) => p.id === photo.id));
+  }, [orderedPhotos]);
 
   const handleClose = useCallback(() => {
     lightboxOpen.current = false;
@@ -103,12 +106,7 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
   }, []);
 
   useEffect(() => {
-    const featured = allPhotos.filter((p) => p.featured);
-    const regular = allPhotos.filter((p) => !p.featured);
-    const lastFeatured = featured.length > 0 ? featured[featured.length - 1] : undefined;
-    const shuffledRegular = shufflePhotos(regular, lastFeatured);
-    const withFeatured = orderPhotos(shuffledRegular, featured);
-    setOrderedPhotos(withFeatured);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setReady(true);
   }, []);
 

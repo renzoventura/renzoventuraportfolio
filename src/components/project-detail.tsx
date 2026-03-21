@@ -24,7 +24,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         </div>
 
         {project.shortDescription && (
-          <p className="mt-1 text-sm italic text-stone-600 sm:text-base">"{project.shortDescription}"</p>
+          <p className="mt-1 text-sm italic text-stone-600 sm:text-base">&ldquo;{project.shortDescription}&rdquo;</p>
         )}
 
         <p className="mt-1 text-sm leading-relaxed text-stone-500 sm:text-base">
