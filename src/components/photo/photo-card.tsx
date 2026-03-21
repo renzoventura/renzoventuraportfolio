@@ -52,13 +52,32 @@ export function PhotoCard({ photo, rowSpan, topPadding = 0, priority = false, on
         />
       </div>
       <div className="mt-2 px-0.5">
-        <p
-          className={`text-xs tracking-wide transition-colors duration-300 ${
-            dark ? "text-stone-400" : "text-stone-600"
-          }`}
-        >
-          {photo.title}
-        </p>
+        <div className="flex items-baseline justify-between gap-2">
+          <p
+            className={`text-xs tracking-wide transition-colors duration-300 ${
+              dark ? "text-stone-400" : "text-stone-600"
+            }`}
+          >
+            {photo.title}
+          </p>
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className={`shrink-0 ${dark ? "text-stone-600" : "text-stone-400"}`}
+          >
+            <polyline points="6.5 1 9 1 9 3.5" />
+            <polyline points="3.5 9 1 9 1 6.5" />
+            <line x1="9" y1="1" x2="5.5" y2="4.5" />
+            <line x1="1" y1="9" x2="4.5" y2="5.5" />
+          </svg>
+        </div>
         {photo.location && (
           <p
             className={`mt-0.5 text-xs transition-colors duration-300 ${
