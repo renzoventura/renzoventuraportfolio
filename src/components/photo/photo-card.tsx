@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import type { Photo } from "@/src/data/photos";
 
@@ -20,10 +20,22 @@ export function PhotoCard({ photo, rowSpan, topPadding = 0, priority = false, on
   const dark = theme === "dark";
   const [loaded, setLoaded] = useState(false);
 
+  // Preload lightbox-quality image on pointer down — fires ~200ms before click
+  const handlePointerDown = useCallback(() => {
+    const vw = window.innerWidth;
+    const dpr = window.devicePixelRatio || 1;
+    const estimated = Math.round(vw * 0.80 * dpr);
+    const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+    const w = deviceSizes.find((s) => s >= estimated) ?? 1920;
+    const img = new window.Image();
+    img.src = `/_next/image?url=${encodeURIComponent(photo.src)}&w=${w}&q=85`;
+  }, [photo.src]);
+
   return (
     <article
       className="group cursor-pointer"
       style={{ gridRowEnd: `span ${rowSpan}`, paddingTop: topPadding > 0 ? `${topPadding}px` : undefined }}
+      onPointerDown={handlePointerDown}
       onClick={() => onSelect(photo)}
       onKeyDown={(e) => e.key === "Enter" && onSelect(photo)}
       role="button"

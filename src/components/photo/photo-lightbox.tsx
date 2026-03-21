@@ -78,6 +78,26 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
     return () => el.removeEventListener("touchmove", handleTouchMove);
   }, [initialIndex]);
 
+  // Preload adjacent photos for instant swipe
+  useEffect(() => {
+    if (initialIndex === null) return;
+    const toPreload = [index - 1, index + 1].filter((i) => i >= 0 && i < photos.length);
+    const links = toPreload.map((i) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      const vw = typeof window !== "undefined" ? window.innerWidth : 1440;
+      const dpr = typeof window !== "undefined" ? (window.devicePixelRatio || 1) : 1;
+      const estimated = Math.round(vw * 0.80 * dpr);
+      const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+      const w = deviceSizes.find((s) => s >= estimated) ?? 1920;
+      link.href = `/_next/image?url=${encodeURIComponent(photos[i].src)}&w=${w}&q=85`;
+      document.head.appendChild(link);
+      return link;
+    });
+    return () => links.forEach((link) => link.remove());
+  }, [index, photos, initialIndex]);
+
   // Scroll filmstrip to keep active thumb visible
   useEffect(() => {
     const el = filmstripRef.current;
@@ -162,7 +182,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
         <div className="relative flex flex-col items-center">
           {/* Container sized to the image's aspect ratio upfront — prevents caption jump */}
           <div
-            className="relative max-h-[82vh] max-w-[85vw] shadow-2xl"
+            className="relative max-h-[82vh] max-w-[85vw] overflow-hidden shadow-2xl"
             style={{
               aspectRatio: `${displayed.width} / ${displayed.height}`,
               width: `min(85vw, calc(82vh * ${(displayed.width / displayed.height).toFixed(6)}))`,
@@ -170,6 +190,18 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
             } as React.CSSProperties}
             onContextMenu={(e) => e.preventDefault()}
           >
+            {/* Blur placeholder — card image is already cached, shows instantly */}
+            <Image
+              key={`blur-${displayed.src}`}
+              src={displayed.src}
+              alt=""
+              fill
+              aria-hidden
+              quality={65}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className={`transition-opacity duration-300 ${loaded ? "opacity-0" : "opacity-100"}`}
+              style={{ objectFit: "contain", filter: "blur(12px)", transform: "scale(1.05)" }}
+            />
             {!loaded && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="h-5 w-5 animate-spin rounded-full border border-white/15 border-t-white/50" />
@@ -184,7 +216,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
               style={{ objectFit: "contain" }}
               priority
               quality={85}
-              sizes="(max-width: 640px) 88vw, 2048px"
+              sizes="(max-width: 640px) 88vw, 80vw"
               draggable={false}
               onLoad={() => setLoaded(true)}
             />
