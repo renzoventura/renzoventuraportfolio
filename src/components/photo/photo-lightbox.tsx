@@ -141,25 +141,35 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
 
         {/* Image */}
         <div className="relative flex flex-col items-center">
-          {!loaded && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="h-5 w-5 animate-spin rounded-full border border-white/15 border-t-white/50" />
-            </div>
-          )}
-          <Image
-            key={displayed.src}
-            src={displayed.src}
-            alt={displayed.alt}
-            width={displayed.width}
-            height={displayed.height}
-            className={`h-auto w-auto max-h-[82vh] max-w-[85vw] shadow-2xl transition-opacity duration-500 ${
-              loaded ? "opacity-100" : "opacity-0"
-            }`}
-            priority
-            quality={85}
-            sizes="(max-width: 640px) 88vw, 2048px"
-            onLoad={() => setLoaded(true)}
-          />
+          {/* Container sized to the image's aspect ratio upfront — prevents caption jump */}
+          <div
+            className="relative max-h-[82vh] max-w-[85vw] shadow-2xl"
+            style={{
+              aspectRatio: `${displayed.width} / ${displayed.height}`,
+              width: `min(85vw, calc(82vh * ${(displayed.width / displayed.height).toFixed(6)}))`,
+              WebkitTouchCallout: "none",
+            } as React.CSSProperties}
+            onContextMenu={(e) => e.preventDefault()}
+          >
+            {!loaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="h-5 w-5 animate-spin rounded-full border border-white/15 border-t-white/50" />
+              </div>
+            )}
+            <Image
+              key={displayed.src}
+              src={displayed.src}
+              alt={displayed.alt}
+              fill
+              className={`transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+              style={{ objectFit: "contain" }}
+              priority
+              quality={85}
+              sizes="(max-width: 640px) 88vw, 2048px"
+              draggable={false}
+              onLoad={() => setLoaded(true)}
+            />
+          </div>
 
           {/* Caption */}
           <p className="mt-3 flex flex-wrap justify-center text-xs uppercase tracking-widest text-white/45">

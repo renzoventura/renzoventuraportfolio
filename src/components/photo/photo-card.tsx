@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import type { Photo } from "@/src/data/photos";
 
@@ -34,7 +34,8 @@ export function PhotoCard({ photo, rowSpan, topPadding = 0, priority = false, on
         className={`relative w-full transition-colors duration-500 ${
           !loaded ? (dark ? "animate-pulse bg-stone-800" : "animate-pulse bg-stone-200") : ""
         }`}
-        style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
+        style={{ aspectRatio: `${photo.width} / ${photo.height}`, WebkitTouchCallout: "none" } as React.CSSProperties}
+        onContextMenu={(e) => e.preventDefault()}
       >
         <Image
           src={photo.src}
@@ -48,6 +49,7 @@ export function PhotoCard({ photo, rowSpan, topPadding = 0, priority = false, on
           quality={65}
           priority={priority}
           title=""
+          draggable={false}
           onLoad={() => setLoaded(true)}
         />
       </div>
