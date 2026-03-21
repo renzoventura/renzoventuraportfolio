@@ -2,6 +2,7 @@
 
 import { eu22photos } from "@/src/data/eu22photos";
 
+import { OtherAlbums } from "../photo/other-albums";
 import { PhotoGallery } from "../photo/photo-gallery";
 import { PhotoNav } from "../photo/photo-nav";
 import { PhotoThemeProvider, usePhotoTheme } from "../photo/photo-theme-provider";
@@ -35,9 +36,11 @@ function PageContent() {
         </h1>
       </header>
 
-      <main className="px-6 pb-24 sm:px-10 lg:px-16">
+      <main className="px-6 pb-6 sm:px-10 lg:px-16">
         <PhotoGallery photos={eu22photos} />
       </main>
+
+      <OtherAlbums currentId="eu22" />
 
       <footer className="px-6 pb-12 sm:px-10 lg:px-16">
         <p

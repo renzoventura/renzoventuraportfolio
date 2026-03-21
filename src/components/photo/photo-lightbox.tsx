@@ -6,104 +6,149 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Photo } from "@/src/data/photos";
 
 type Props = {
-  photo: Photo | null;
+  photos: Photo[];
+  initialIndex: number | null;
   onClose: () => void;
 };
 
-export function PhotoLightbox({ photo, onClose }: Props) {
-  const [displayed, setDisplayed] = useState<Photo | null>(null);
+export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
+  const [index, setIndex] = useState(initialIndex ?? 0);
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const filmstripRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
+  // Open/close animation
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-
-    if (photo) {
-      setDisplayed(photo);
+    if (initialIndex !== null) {
+      setIndex(initialIndex);
       setLoaded(false);
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => setVisible(true)),
-      );
+      requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
     } else {
       setVisible(false);
-      timerRef.current = setTimeout(() => setDisplayed(null), 350);
+      timerRef.current = setTimeout(() => {}, 350);
     }
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [initialIndex]);
 
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [photo]);
+  // Reset loaded when index changes
+  const goTo = useCallback((next: number) => {
+    setLoaded(false);
+    setIndex(next);
+  }, []);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    },
-    [onClose],
-  );
+  const prev = useCallback(() => goTo((index - 1 + photos.length) % photos.length), [index, photos.length, goTo]);
+  const next = useCallback(() => goTo((index + 1) % photos.length), [index, photos.length, goTo]);
+
+  // Keyboard navigation
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") onClose();
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+  }, [onClose, prev, next]);
 
   useEffect(() => {
-    if (!displayed) return;
+    if (initialIndex === null) return;
     document.addEventListener("keydown", handleKeyDown);
     document.documentElement.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.documentElement.style.overflow = "";
     };
-  }, [displayed, handleKeyDown]);
+  }, [initialIndex, handleKeyDown]);
 
-  if (!displayed) return null;
+  // Scroll filmstrip to keep active thumb visible
+  useEffect(() => {
+    const el = filmstripRef.current;
+    if (!el) return;
+    const thumb = el.children[index] as HTMLElement | undefined;
+    if (!thumb) return;
+    const { offsetLeft, offsetWidth } = thumb;
+    el.scrollTo({ left: offsetLeft - el.clientWidth / 2 + offsetWidth / 2, behavior: "smooth" });
+  }, [index]);
+
+  // Swipe gestures
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? next() : prev();
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  }, [prev, next]);
+
+  if (initialIndex === null) return null;
+
+  const displayed = photos[index];
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-6 transition-opacity duration-300 ease-in-out ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-300 ease-in-out ${
         visible ? "opacity-100" : "opacity-0"
       }`}
       role="dialog"
       aria-modal="true"
       aria-label={displayed.title}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/85 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Content */}
+      {/* Main image area */}
       <div
-        className={`relative z-10 flex flex-col items-center transition-transform duration-300 ease-in-out ${
+        className={`relative z-10 flex w-full flex-1 items-center justify-center px-12 transition-transform duration-300 ease-in-out ${
           visible ? "scale-100" : "scale-95"
         }`}
       >
-        {/* Close button */}
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute -top-10 right-0 flex h-8 w-8 items-center justify-center text-white/50 transition-colors duration-150 hover:text-white"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center text-white/50 transition-colors duration-150 hover:text-white"
           aria-label="Close lightbox"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path
-              d="M1 1L13 13M13 1L1 13"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
+            <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </button>
 
-        {/* Image + spinner */}
-        <div className="relative">
+        {/* Prev */}
+        {photos.length > 1 && (
+          <button
+            onClick={prev}
+            aria-label="Previous photo"
+            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-white/40 transition-colors duration-150 hover:text-white sm:left-4"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        )}
+
+        {/* Image */}
+        <div className="relative flex flex-col items-center">
           {!loaded && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="h-5 w-5 animate-spin rounded-full border border-white/15 border-t-white/50" />
             </div>
           )}
           <Image
+            key={displayed.src}
             src={displayed.src}
             alt={displayed.alt}
             width={displayed.width}
             height={displayed.height}
-            className={`h-auto w-auto max-h-[82vh] max-w-[88vw] shadow-2xl transition-opacity duration-500 ${
+            className={`h-auto w-auto max-h-[70vh] max-w-[80vw] shadow-2xl transition-opacity duration-500 ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
             priority
@@ -111,21 +156,66 @@ export function PhotoLightbox({ photo, onClose }: Props) {
             sizes="(max-width: 640px) 88vw, 2048px"
             onLoad={() => setLoaded(true)}
           />
+
+          {/* Caption */}
+          <p className="mt-3 text-center text-xs uppercase tracking-widest text-white/45">
+            {displayed.title}
+            {displayed.location && (
+              <>
+                <span className="mx-2 opacity-40">·</span>
+                {displayed.location}
+              </>
+            )}
+            <span className="mx-2 opacity-40">·</span>
+            {displayed.year}
+          </p>
         </div>
 
-        {/* Caption */}
-        <p className="mt-4 text-center text-xs uppercase tracking-widest text-white/45">
-          {displayed.title}
-          {displayed.location ? (
-            <>
-              <span className="mx-2 opacity-40">·</span>
-              {displayed.location}
-            </>
-          ) : null}
-          <span className="mx-2 opacity-40">·</span>
-          {displayed.year}
-        </p>
+        {/* Next */}
+        {photos.length > 1 && (
+          <button
+            onClick={next}
+            aria-label="Next photo"
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-white/40 transition-colors duration-150 hover:text-white sm:right-4"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        )}
       </div>
+
+      {/* Filmstrip */}
+      {photos.length > 1 && (
+        <div className="relative z-10 w-full pb-6 pt-3">
+          <div
+            ref={filmstripRef}
+            className="flex gap-1.5 overflow-x-auto px-6"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {photos.map((photo, i) => (
+              <button
+                key={photo.id}
+                onClick={() => goTo(i)}
+                aria-label={`Go to photo ${i + 1}`}
+                className={`relative shrink-0 overflow-hidden rounded transition-opacity duration-200 ${
+                  i === index ? "opacity-100 ring-1 ring-white/60" : "opacity-35 hover:opacity-60"
+                }`}
+                style={{ height: 48, width: 48 * (photo.width / photo.height) }}
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  className="object-cover"
+                  quality={20}
+                  sizes="64px"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

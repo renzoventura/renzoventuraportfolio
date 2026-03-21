@@ -82,23 +82,25 @@ type Props = {
 };
 
 export function PhotoGallery({ photos: allPhotos }: Props) {
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-
-  const handleSelect = useCallback((photo: Photo) => {
-    lightboxOpen.current = true;
-    setSelectedPhoto(photo);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    lightboxOpen.current = false;
-    setSelectedPhoto(null);
-  }, []);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [orderedPhotos, setOrderedPhotos] = useState<Photo[]>(allPhotos);
   const [spanMap, setSpanMap] = useState<Record<string, number>>({});
   const [cols, setCols] = useState(3);
   const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const lightboxOpen = useRef(false);
+  const orderedPhotosRef = useRef(orderedPhotos);
+  orderedPhotosRef.current = orderedPhotos;
+
+  const handleSelect = useCallback((photo: Photo) => {
+    lightboxOpen.current = true;
+    setSelectedIndex(orderedPhotosRef.current.findIndex((p) => p.id === photo.id));
+  }, []);
+
+  const handleClose = useCallback(() => {
+    lightboxOpen.current = false;
+    setSelectedIndex(null);
+  }, []);
 
   useEffect(() => {
     const featured = allPhotos.filter((p) => p.featured);
@@ -174,7 +176,8 @@ export function PhotoGallery({ photos: allPhotos }: Props) {
       </div>
 
       <PhotoLightbox
-        photo={selectedPhoto}
+        photos={orderedPhotos}
+        initialIndex={selectedIndex}
         onClose={handleClose}
       />
     </>

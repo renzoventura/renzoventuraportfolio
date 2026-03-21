@@ -2,6 +2,7 @@
 
 import { photos } from "@/src/data/photos";
 
+import { OtherAlbums } from "./other-albums";
 import { PhotoGallery } from "./photo-gallery";
 import { PhotoNav } from "./photo-nav";
 import { PhotoThemeProvider, usePhotoTheme } from "./photo-theme-provider";
@@ -35,9 +36,11 @@ function PageContent() {
         </h1>
       </header>
 
-      <main className="px-6 pb-24 sm:px-10 lg:px-16">
+      <main className="px-6 pb-6 sm:px-10 lg:px-16">
         <PhotoGallery photos={photos} />
       </main>
+
+      <OtherAlbums currentId="japan23" />
 
       <footer className="px-6 pb-12 sm:px-10 lg:px-16">
         <p

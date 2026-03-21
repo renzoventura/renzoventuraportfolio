@@ -49,7 +49,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
           </a>
           <a
             href={`mailto:${profile.links.email}`}
-            className="text-stone-500 transition-colors duration-200 hover:text-stone-300"
+            className="text-stone-300 transition-colors duration-200 hover:text-stone-100"
           >
             {profile.links.email}
           </a>
