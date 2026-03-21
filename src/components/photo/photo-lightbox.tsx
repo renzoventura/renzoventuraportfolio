@@ -16,6 +16,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const filmstripRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
@@ -60,6 +61,22 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
     };
   }, [initialIndex, handleKeyDown]);
 
+  // Block browser back-swipe during horizontal photo swipe (requires non-passive listener)
+  useEffect(() => {
+    if (initialIndex === null) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const handleTouchMove = (e: TouchEvent) => {
+      if (filmstripRef.current?.contains(e.target as Node)) return;
+      if (touchStartX.current === null || touchStartY.current === null) return;
+      const dx = Math.abs(e.touches[0].clientX - touchStartX.current);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
+      if (dx > dy) e.preventDefault();
+    };
+    el.addEventListener("touchmove", handleTouchMove, { passive: false });
+    return () => el.removeEventListener("touchmove", handleTouchMove);
+  }, [initialIndex]);
+
   // Scroll filmstrip to keep active thumb visible
   useEffect(() => {
     const el = filmstripRef.current;
@@ -97,6 +114,7 @@ export function PhotoLightbox({ photos, initialIndex, onClose }: Props) {
 
   return (
     <div
+      ref={containerRef}
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-300 ease-in-out ${
         visible ? "opacity-100" : "opacity-0"
       }`}
