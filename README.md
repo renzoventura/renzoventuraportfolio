@@ -2,9 +2,9 @@
 
 Two sites, one codebase. A software portfolio at [www.renzoventura.com](https://www.renzoventura.com) and a photography gallery at [photo.renzoventura.com](https://photo.renzoventura.com) — both served from a single Next.js app, split by subdomain routing via middleware.
 
-**www.renzoventura.com** — software engineering portfolio showcasing projects, experience, and background.
+**[www.renzoventura.com](https://www.renzoventura.com)** — software engineering portfolio showcasing projects, experience, and background.
 
-**photo.renzoventura.com** — photography gallery with a dark cinematic aesthetic, organised into travel albums with a fullscreen lightbox, filmstrip navigation, and swipe support on mobile.
+**[photo.renzoventura.com](https://photo.renzoventura.com)** — photography gallery with a dark cinematic aesthetic, organised into travel albums with a fullscreen lightbox, filmstrip navigation, and swipe support on mobile.
 
 ## Stack
 
