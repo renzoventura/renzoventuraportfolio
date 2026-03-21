@@ -52,7 +52,7 @@ export function OtherAlbums({ currentId }: Props) {
                 {album.title} {album.subtitle}
               </p>
               <p
-                className={`shrink-0 text-xs opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
+                className={`shrink-0 text-xs ${
                   dark ? "text-stone-500" : "text-stone-400"
                 }`}
               >
