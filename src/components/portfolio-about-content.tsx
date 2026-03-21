@@ -42,8 +42,7 @@ export function PortfolioAboutContent() {
           </div>
 
           <div className="max-w-[63ch] text-sm font-light leading-relaxed text-stone-400 sm:text-xl sm:font-normal">
-            <p className="mb-4">Renzo Ventura is a Senior Software Engineer at Tabcorp, specialising in building reliable, user-first digital products at scale.</p>
-            <p className="mb-8">Currently leading the technical delivery and architecture of Australia's premier real-time mobile wagering platform, operating within a heavily regulated environment.</p>
+            <p className="mb-8">Renzo Ventura is a Senior Software Engineer at Tabcorp, specialising in building reliable, user-first digital products at scale. Operating within a heavily regulated environment, delivering enterprise-grade systems for Australia's premier real-time mobile wagering platform.</p>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
               <a
                 href={profile.links.linkedin}

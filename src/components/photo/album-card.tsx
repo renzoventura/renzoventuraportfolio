@@ -43,20 +43,22 @@ export function AlbumCard({ album, rowSpan }: Props) {
           />
         </div>
         <div className="mt-2 px-0.5">
-          <p
-            className={`text-xs tracking-wide transition-colors duration-300 ${
-              dark ? "text-stone-400" : "text-stone-600"
-            }`}
-          >
-            {album.title}
-          </p>
-          <p
-            className={`mt-0.5 text-xs transition-colors duration-300 ${
-              dark ? "text-stone-600" : "text-stone-400"
-            }`}
-          >
-            {album.subtitle}
-          </p>
+          <div className="flex items-baseline justify-between gap-2">
+            <p
+              className={`text-xs tracking-wide transition-colors duration-300 ${
+                dark ? "text-stone-400" : "text-stone-600"
+              }`}
+            >
+              {album.title} {album.subtitle}
+            </p>
+            <p
+              className={`shrink-0 text-xs ${
+                dark ? "text-stone-500" : "text-stone-400"
+              }`}
+            >
+              Go to album →
+            </p>
+          </div>
         </div>
       </Link>
     </article>
