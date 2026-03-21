@@ -146,7 +146,7 @@ export function ScreenshotLightbox({ screenshots, initialIndex, projectTitle, on
             alt={`${projectTitle} screenshot ${index + 1}`}
             width={390}
             height={844}
-            className={`h-auto w-auto max-h-[75vh] max-w-[70vw] shadow-2xl transition-opacity duration-500 sm:max-w-[50vw] lg:max-w-xs ${
+            className={`h-auto w-auto max-h-[82vh] max-w-[80vw] shadow-2xl transition-opacity duration-500 sm:max-w-[60vw] lg:max-w-[30vw] ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
             priority
