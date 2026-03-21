@@ -31,7 +31,7 @@ function PageContent() {
               dark ? "text-stone-500" : "text-stone-400"
             }`}
           >
-            | daylesford, 2025
+            | Daylesford 2025
           </span>
         </h1>
       </header>

@@ -31,7 +31,7 @@ function PageContent() {
               dark ? "text-stone-500" : "text-stone-400"
             }`}
           >
-            | japan, 2023
+            | Japan 2023
           </span>
         </h1>
       </header>
