@@ -22,7 +22,11 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
       </header>
 
       <main className="px-6 pb-24 sm:px-10 lg:px-16">
-        <div className="mb-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <RecentProjects projects={projects} />
+
+        <div className="mt-6">
+          <h2 className="mb-4 text-2xl font-light tracking-tight text-stone-500 sm:text-4xl">Get in touch</h2>
+        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <a
             href={profile.links.linkedin}
             target="_blank"
@@ -54,8 +58,7 @@ export function HomeExperience({ profile, projects }: HomeExperienceProps) {
             {profile.links.email}
           </a>
         </div>
-
-        <RecentProjects projects={projects} />
+        </div>
       </main>
 
       <footer className="px-6 pb-12 sm:px-10 lg:px-16">

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+import { OtherProjects } from "@/src/components/other-projects";
 import { ProjectDetail } from "@/src/components/project-detail";
 import { PortfolioNav } from "@/src/components/portfolio-nav";
 import { projects } from "@/src/data/projects";
@@ -30,6 +31,7 @@ export default async function ProjectPage({ params }: Props) {
       <PortfolioNav />
       <main className="px-6 pb-24 pt-[59px] sm:px-10 sm:pt-32 lg:px-16">
         <ProjectDetail project={project} />
+        <OtherProjects currentId={project.id} projects={projects} />
       </main>
     </div>
   );
