@@ -37,7 +37,7 @@ export const projects: Project[] = [
     ],
     githubUrl: "https://github.com/renzoventura/stride",
     liveUrl: "https://github.com/user-attachments/assets/33605762-77ba-4292-964b-517586f2a8a4",
-    demoImageUrl: "/projects/stride_screenshot.jpg",
+    demoImageUrl: "/screenshots/stride/1.PNG",
     screenshots: strideScreenshots,
     recent: true,
     featured: true,
