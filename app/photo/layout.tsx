@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ScrollReset } from "@/src/components/photo/scroll-reset";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://photo.renzoventura.com"),
@@ -40,5 +41,10 @@ export default function PhotoLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <ScrollReset />
+      {children}
+    </>
+  );
 }
